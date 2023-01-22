@@ -5,7 +5,7 @@
 package br.com.uemg.autopecas.test;
 
 import br.com.uemg.autopecas.controller.ConnectionFactory;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -20,10 +20,13 @@ public class TesteRead {
 
         ConnectionFactory factory = new ConnectionFactory();
         Connection connection = factory.getConnection();
-
-        /**/
+        /*
         Statement statement = connection.createStatement();
-        statement.execute("SELECT idUsuario, Tipo, NomeCompleto FROM Usuarios");
+         */
+        String sql = "SELECT idUsuario, Tipo, NomeCompleto FROM Usuarios";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.execute();
 
         ResultSet result = statement.getResultSet();
 

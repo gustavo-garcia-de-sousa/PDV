@@ -7,7 +7,7 @@ package br.com.uemg.autopecas.test;
 import br.com.uemg.autopecas.controller.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -18,9 +18,15 @@ public class TesteDelete {
     public static void main(String[] args) throws SQLException {
         ConnectionFactory factory = new ConnectionFactory();
         Connection connection = factory.getConnection();
-
+        /*
         Statement statement = connection.createStatement();
-        statement.execute("DELETE FROM Usuarios WHERE idUsuario > 5");
+         */
+        String sql = "DELETE FROM Usuarios WHERE idUsuario > ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        
+        statement.setInt(1, 5);//(índice SQL, valor)
+        
+        statement.execute();    
 
         System.out.println("Registros deletados:" + statement.getUpdateCount());
     }

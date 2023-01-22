@@ -8,6 +8,7 @@ import br.com.uemg.autopecas.controller.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -25,18 +26,69 @@ public class TesteCreate {
                 + "Tipo, NomeCompleto, CPF, Senha, Email) VALUES ("
                 + "'VENDEDOR', 'NEIDE', '12365498710','123', 'neide@gmail.com')", Statement.RETURN_GENERATED_KEYS);
          */
-        Statement statement = connection.prepareStatement("INSERT INTO Usuarios ("
+
+        connection.setAutoCommit(false);//desligando o controle transacional default
+
+        //pré compilando a QUERY para evitar SQL INJECTION
+        /*
+            statement.setString(1, "VENDEDOR");//(índice SQL, valor)
+            statement.setString(2, "LEONARDO");
+            statement.setString(3, "555666777-20");
+            statement.setString(4, "123");
+            statement.setString(5, "contato@leonardo.com");
+            statement.execute();
+         */
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Usuarios ("
                 + "Tipo, NomeCompleto, CPF, Senha, Email) VALUES ("
-                + "'VENDEDOR', 'NEIDE', '12365498710','123', 'neide@gmail.com')", Statement.RETURN_GENERATED_KEYS);
-        
-             
-        
-        ResultSet result = statement.getGeneratedKeys();
+                + "?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            /*
+                statement.setString(1, "VENDEDOR");//(índice SQL, valor)
+                statement.setString(2, "LEONARDO");
+                statement.setString(3, "555666777-20");
+                statement.setString(4, "123");
+                statement.setString(5, "contato@leonardo.com");
+                
+                statement.execute();
+                
+             *///criei um método para facilitar na sintaxe SQL
+            add("VENDEDOR", "JP", "12345697801", "123", "contato@cedan.com", statement);
+            add("VENDEDOR", "AH", "12345697801", "123", "contato@henrique.com", statement);
+            add("VENDEDOR", "GG", "12345697801", "123", "contato@garcia.com", statement);
 
-        while (result.next()) {
+            connection.commit();//autorizando a transação do SQL
 
-            System.out.println("Registro nº " + result.getInt(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+            connection.rollback();
+            System.out.println("ROLLBACK EXECUTADO"); //roll back = ação da transação desfeita
+
         }
+
+    }
+
+    public static void add(String Tipo, String NomeCompleto, String CPF, String Senha, String Email, PreparedStatement statement) throws SQLException {
+
+        statement.setString(1, Tipo);//(índice SQL, valor)
+        statement.setString(2, NomeCompleto);
+        statement.setString(3, CPF);
+        statement.setString(4, Senha);
+        statement.setString(5, Email);
+
+        //simulando um erro pra testar o roll back
+        if (Senha.equals("123")) {
+            throw new RuntimeException("Não foi possível adicionar produto");
+        }
+
+        statement.execute();
+
+        try (ResultSet result = statement.getGeneratedKeys()) {
+
+            while (result.next()) {
+
+                System.out.println("Registro nº " + result.getInt(1));
+            }
+        }
+
     }
 
 }

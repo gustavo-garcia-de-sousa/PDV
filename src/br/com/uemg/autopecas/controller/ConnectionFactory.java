@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author gustavo
  */
-public class ConnectionFactory implements AutoCloseable {
+public class ConnectionFactory {
 
     private static final String URL = "jdbc:mysql://localhost:3306/dbestoque";
     private static final String USER = "root";
@@ -21,12 +21,6 @@ public class ConnectionFactory implements AutoCloseable {
     public final Connection getConnection() throws SQLException {
 
         return DriverManager.getConnection(URL, USER, PASSWORD);
-        
-
-    }
-
-    @Override
-    public void close() throws Exception {
 
     }
 
