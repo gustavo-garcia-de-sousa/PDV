@@ -14,29 +14,27 @@ import java.sql.ResultSet;
  *
  * @author gustavo
  */
-public class TesteRead {
+public class TestRead {
 
     public static void main(String[] args) throws SQLException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
         /*
         Statement statement = connection.createStatement();
          */
-        String sql = "SELECT idUsuario, Tipo, NomeCompleto FROM Usuarios";
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        statement.execute();
-
-        ResultSet result = statement.getResultSet();
-
-        while (result.next()) {
-
-            System.out.println("id nº " + result.getInt("idUsuario") + " nome completo " + result.getNString("NomeCompleto"));
+        try (Connection connection = factory.getConnection()) {
+            /*
+            Statement statement = connection.createStatement();
+            */
+            String sql = "SELECT codigo, nome, senha FROM Usuario";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.execute();
+            ResultSet result = statement.getResultSet();
+            while (result.next()) {
+                System.out.println("id nº " + result.getInt("codigo") + " nome completo " + result.getNString("nome"));
+            }
+            /**/
         }
-
-        /**/
-        connection.close();
     }
 
 }

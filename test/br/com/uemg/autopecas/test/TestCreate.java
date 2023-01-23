@@ -5,30 +5,42 @@
 package br.com.uemg.autopecas.test;
 
 import br.com.uemg.autopecas.controller.ConnectionFactory;
+import br.com.uemg.autopecas.DAO.UsuarioDAO;
+import br.com.uemg.autopecas.model.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
  * @author gustavo
  */
-public class TesteCreate {
+public class TestCreate {
 
     public static void main(String[] args) throws SQLException {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+
+        try (Connection connection = new ConnectionFactory().getConnection()) {
+
+            UsuarioDAO u = new UsuarioDAO(connection);
+
+            //u.create(new Usuario("GARCIA", "123"));
+            List<Object> list = u.read();
+            list.stream().forEach(x -> System.out.println(x));
+
+        }
+
         /*
+        try (Connection connection = factory.getConnection()) {
+            /*
         Statement statement = connection.createStatement();
         statement.execute("INSERT INTO Usuarios ("
                 + "Tipo, NomeCompleto, CPF, Senha, Email) VALUES ("
                 + "'VENDEDOR', 'NEIDE', '12365498710','123', 'neide@gmail.com')", Statement.RETURN_GENERATED_KEYS);
          */
-
-        connection.setAutoCommit(false);//desligando o controle transacional default
-
+        //connection.setAutoCommit(false);//desligando o controle transacional default
         //pré compilando a QUERY para evitar SQL INJECTION
         /*
             statement.setString(1, "VENDEDOR");//(índice SQL, valor)
@@ -38,10 +50,12 @@ public class TesteCreate {
             statement.setString(5, "contato@leonardo.com");
             statement.execute();
          */
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Usuarios ("
-                + "Tipo, NomeCompleto, CPF, Senha, Email) VALUES ("
-                + "?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            /*
+ /*
+            String sql = "INSERT INTO Usuarios ("
+                    + "Tipo, NomeCompleto, CPF, Senha, Email) VALUES ("
+                    + "?, ?, ?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                /*
                 statement.setString(1, "VENDEDOR");//(índice SQL, valor)
                 statement.setString(2, "LEONARDO");
                 statement.setString(3, "555666777-20");
@@ -50,20 +64,21 @@ public class TesteCreate {
                 
                 statement.execute();
                 
-             *///criei um método para facilitar na sintaxe SQL
-            add("VENDEDOR", "JP", "12345697801", "123", "contato@cedan.com", statement);
-            add("VENDEDOR", "AH", "12345697801", "123", "contato@henrique.com", statement);
-            add("VENDEDOR", "GG", "12345697801", "123", "contato@garcia.com", statement);
+         *///criei um método para facilitar na sintaxe SQL
+        /* 
+                add("VENDEDOR", "JP", "12345697801", "123", "contato@cedan.com", statement);
+                add("VENDEDOR", "AH", "12345697801", "123", "contato@henrique.com", statement);
+                add("VENDEDOR", "GG", "12345697801", "123", "contato@garcia.com", statement);
 
-            connection.commit();//autorizando a transação do SQL
+                connection.commit();//autorizando a transação do SQL
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            connection.rollback();
-            System.out.println("ROLLBACK EXECUTADO"); //roll back = ação da transação desfeita
+            } catch (Exception e) {
 
-        }
+                System.out.println(e);
+                connection.rollback();
+                System.out.println("ROLLBACK EXECUTADO"); //roll back = ação da transação desfeita
 
+            }}*///*
     }
 
     public static void add(String Tipo, String NomeCompleto, String CPF, String Senha, String Email, PreparedStatement statement) throws SQLException {

@@ -13,21 +13,23 @@ import java.sql.PreparedStatement;
  *
  * @author gustavo
  */
-public class TesteDelete {
+public class TestDelete {
 
     public static void main(String[] args) throws SQLException {
         ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
-        /*
+        try (Connection connection = factory.getConnection()) {
+            /*
         Statement statement = connection.createStatement();
-         */
-        String sql = "DELETE FROM Usuarios WHERE idUsuario > ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        
-        statement.setInt(1, 5);//(índice SQL, valor)
-        
-        statement.execute();    
+             */
+            String sql = "DELETE FROM Usuarios WHERE idUsuario > ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        System.out.println("Registros deletados:" + statement.getUpdateCount());
+                statement.setInt(1, 5);//(índice SQL, valor)
+
+                statement.execute();
+
+                System.out.println("Registros deletados:" + statement.getUpdateCount());
+            }
+        }
     }
 }
