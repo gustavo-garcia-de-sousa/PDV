@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.uemg.autopecas.DAO;
 
-import br.com.uemg.autopecas.controller.ConnectionFactory;
 import br.com.uemg.autopecas.model.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,6 +33,11 @@ public class UsuarioDAO implements CRUD {
             statement.setString(1, u.getNome());
             statement.setString(2, u.getSenha());
 
+            //simulando uma Execeção
+            if (u.getSenha().equals("123")) {
+                throw new SQLException("Falha na transação.");
+            }
+
             statement.execute();
 
             try (ResultSet result = statement.getGeneratedKeys()) {
@@ -46,6 +46,10 @@ public class UsuarioDAO implements CRUD {
                     u.setCodigo(result.getInt(1));
                 }
             }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("rollback executado");
         }
     }
 
@@ -79,8 +83,23 @@ public class UsuarioDAO implements CRUD {
     }
 
     @Override
-    public void delete(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(Object object) throws SQLException {
+        Usuario u = (Usuario) object;
+
+        String SQL = "DELETE FROM Usuario WHERE codigo = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            System.out.println(u.getCodigo());
+
+            statement.setInt(1, u.getCodigo());
+
+            statement.execute();
+
+            System.out.println("REGISTROS DELETADOS: " + statement.getUpdateCount());
+
+        }
+
     }
 
 }

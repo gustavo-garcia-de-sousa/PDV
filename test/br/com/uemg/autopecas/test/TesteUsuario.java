@@ -5,11 +5,12 @@
 package br.com.uemg.autopecas.test;
 
 import br.com.uemg.autopecas.controller.ConnectionFactory;
+import br.com.uemg.autopecas.DAO.UsuarioDAO;
 import br.com.uemg.autopecas.model.Usuario;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -19,24 +20,21 @@ import java.util.List;
 public class TesteUsuario {
 
     public static void main(String[] args) throws SQLException {
-        ConnectionFactory factory = new ConnectionFactory();
 
-        try (Connection connection = factory.getConnection()) {
+        try (Connection connection = new ConnectionFactory().getConnection()) {
 
-            String sql = "INSERT INTO Usuario (nome, senha) VALUES (?, ?);";
+            connection.setAutoCommit(false);//desligando o controle transacional default
+            UsuarioDAO ud = new UsuarioDAO(connection);
+            Usuario u = new Usuario();
 
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            //u.create(new Usuario("CEDAN", "1234"));
+            List<Object> list = ud.read();
+            list.stream().forEach(x -> System.out.println(x));
+            u.setCodigo(5);
+            ud.delete(u);
+            list.stream().forEach(x -> System.out.println(x));
 
-                List<Usuario> usuarios = new ArrayList<Usuario>();
-
-                usuarios.add(new Usuario("GUSTAVO", "123"));
-
-                statement.setString(1, usuarios.get(0).getNome());
-                statement.setString(2, usuarios.get(0).getSenha());
-
-                statement.execute();
-            }
         }
-    }
 
+    }
 }

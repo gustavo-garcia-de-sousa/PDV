@@ -17,10 +17,13 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(Integer codigo) {
+        this.codigo = codigo;
+    }
+
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
-
     }
 
     public Integer getCodigo() {

@@ -17,6 +17,7 @@ public class TestDelete {
 
     public static void main(String[] args) throws SQLException {
         ConnectionFactory factory = new ConnectionFactory();
+       
         try (Connection connection = factory.getConnection()) {
             /*
         Statement statement = connection.createStatement();
