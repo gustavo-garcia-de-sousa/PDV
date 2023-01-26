@@ -1,5 +1,6 @@
 package br.com.uemg.autopecas.DAO;
 
+import br.com.uemg.autopecas.model.EnumUsuario;
 import br.com.uemg.autopecas.model.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,12 +27,15 @@ public class UsuarioDAO implements CRUD {
     public void create(Object object) throws SQLException {
 
         Usuario u = (Usuario) object;//casting
-        String SQL = "INSERT INTO Usuario (nome, senha) VALUES (?, ?)";
+        String SQL = "INSERT INTO Usuario (nome, senha, cargo) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
+            connection.setAutoCommit(false);//desligando transação automática
+
             statement.setString(1, u.getNome());
             statement.setString(2, u.getSenha());
+            statement.setObject(3, u.getCargo());
 
             //simulando uma Execeção
             if (u.getSenha().equals("123")) {
@@ -40,10 +44,12 @@ public class UsuarioDAO implements CRUD {
 
             statement.execute();
 
+            connection.commit();//enviando transação
+
             try (ResultSet result = statement.getGeneratedKeys()) {
 
                 while (result.next()) {
-                    u.setCodigo(result.getInt(1));
+                    u.setId(result.getInt(1));
                 }
             }
         } catch (SQLException e) {
@@ -66,9 +72,10 @@ public class UsuarioDAO implements CRUD {
 
             while (result.next()) {
                 Usuario u = new Usuario();
-                u.setCodigo(result.getInt("codigo"));
+                u.setId(result.getInt("id"));
                 u.setNome(result.getString("nome"));
                 u.setSenha(result.getString("senha"));
+                u.setCargo(EnumUsuario.valueOf(result.getString("cargo")));
                 list.add(u);
 
             }
@@ -78,26 +85,60 @@ public class UsuarioDAO implements CRUD {
     }
 
     @Override
-    public void update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void update(Object object) throws SQLException {
+        Usuario u = (Usuario) object;//casting
+        String SQL = "UPDATE Usuario SET nome = ?, senha = ?, cargo = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
+
+            statement.setString(1, u.getNome());
+            statement.setString(2, u.getSenha());
+            statement.setString(3, u.getCargo().name());
+            statement.setInt(4, u.getId());
+
+            statement.execute();
+
+            connection.commit();//enviando transação
+
+            try (ResultSet result = statement.getGeneratedKeys()) {
+
+                while (result.next()) {
+                    u.setId(result.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("rollback executado");
+        }
     }
 
     @Override
     public void delete(Object object) throws SQLException {
         Usuario u = (Usuario) object;
 
-        String SQL = "DELETE FROM Usuario WHERE codigo = ?";
+        String SQL = "DELETE FROM Usuario WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
 
-            System.out.println(u.getCodigo());
+            connection.setAutoCommit(false);//desligando transação automática
 
-            statement.setInt(1, u.getCodigo());
+            System.out.println(u.getId());
+
+            statement.setInt(1, u.getId());
 
             statement.execute();
 
             System.out.println("REGISTROS DELETADOS: " + statement.getUpdateCount());
 
+            connection.commit();//enviando transação
+
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("rollback executado");
         }
 
     }

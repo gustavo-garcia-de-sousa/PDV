@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.uemg.autopecas.model;
 
 /**
@@ -10,28 +6,17 @@ package br.com.uemg.autopecas.model;
  */
 public class Usuario {
 
-    private Integer codigo;
+    private Integer id;
     private String nome;
     private String senha;
+    public EnumUsuario cargo;
 
-    public Usuario() {
+    public Integer getId() {
+        return id;
     }
 
-    public Usuario(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Usuario(String nome, String senha) {
-        this.nome = nome;
-        this.senha = senha;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -50,9 +35,17 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public EnumUsuario getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(EnumUsuario cargo) {
+        this.cargo = cargo;
+    }
+
     @Override
     public String toString() {
-        return "código: " + this.codigo + " nome: " + this.nome + " senha: " + this.senha;
+        return "código: " + this.id + " nome: " + this.nome + " senha: " + this.senha + " cargo: " + this.cargo;
     }
 
 }
