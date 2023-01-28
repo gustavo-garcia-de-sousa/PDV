@@ -8,12 +8,14 @@ package br.com.uemg.autopecas.view;
  *
  * @author gustavo
  */
-public class Principal extends javax.swing.JFrame {
+public class PrincipalView extends javax.swing.JFrame {
+
+    public static boolean ClienteView = false;
 
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public PrincipalView() {
         initComponents();
     }
 
@@ -35,6 +37,14 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GRACH Sistemas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         DesktopPanePrincipal.setBackground(new java.awt.Color(180, 231, 211));
 
@@ -42,14 +52,15 @@ public class Principal extends javax.swing.JFrame {
         DesktopPanePrincipal.setLayout(DesktopPanePrincipalLayout);
         DesktopPanePrincipalLayout.setHorizontalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 790, Short.MAX_VALUE)
         );
         DesktopPanePrincipalLayout.setVerticalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
 
-        MenuBarPrincipal.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        MenuBarPrincipal.setFont(new java.awt.Font("Liberation Sans", 1, 20)); // NOI18N
+        MenuBarPrincipal.setInheritsPopupMenu(true);
 
         MenuCadastro.setText("Cadastro");
         MenuCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +69,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        MenuItemCliente.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        MenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        MenuItemCliente.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         MenuItemCliente.setText("Cliente");
         MenuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,20 +100,31 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(DesktopPanePrincipal)
         );
 
-        setSize(new java.awt.Dimension(800, 700));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemClienteActionPerformed
         // TODO add your handling code here:
-        ClienteView cliente = new ClienteView();
-        DesktopPanePrincipal.add(cliente);
-        cliente.setVisible(true);
+        if (ClienteView == false) {
+            ClienteView cliente = new ClienteView();
+            DesktopPanePrincipal.add(cliente);
+            cliente.setVisible(true);
+        }
+
     }//GEN-LAST:event_MenuItemClienteActionPerformed
 
     private void MenuCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuCadastroActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setExtendedState(MAXIMIZED_BOTH);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -120,26 +143,25 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new PrincipalView().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane DesktopPanePrincipal;
+    public static javax.swing.JDesktopPane DesktopPanePrincipal;
     private javax.swing.JMenuBar MenuBarPrincipal;
     private javax.swing.JMenu MenuCadastro;
     private javax.swing.JMenuItem MenuItemCliente;

@@ -4,6 +4,18 @@
  */
 package br.com.uemg.autopecas.view;
 
+import br.com.uemg.autopecas.DAO.ClienteDAO;
+import br.com.uemg.autopecas.controller.ConnectionFactory;
+import br.com.uemg.autopecas.model.Cliente;
+import br.com.uemg.autopecas.model.Pessoa;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author gustavo
@@ -15,6 +27,9 @@ public class ConsultaClienteView extends javax.swing.JInternalFrame {
      */
     public ConsultaClienteView() {
         initComponents();
+        DefaultTableModel cliente = (DefaultTableModel) TabelaClientes.getModel();
+        TabelaClientes.setRowSorter(new TableRowSorter(cliente));
+        read();
     }
 
     /**
@@ -26,25 +41,176 @@ public class ConsultaClienteView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PainelConsultaCliente = new javax.swing.JPanel();
+        LabelConsultapor = new javax.swing.JLabel();
+        LabelArgumento = new javax.swing.JLabel();
+        ComboBoxConsulta = new javax.swing.JComboBox<>();
+        TextoArgumento = new javax.swing.JTextField();
+        BotaoConsultar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelaClientes = new javax.swing.JTable();
+
         setClosable(true);
+        setForeground(java.awt.Color.white);
         setResizable(true);
         setTitle("Consulta Clientes");
+        setVisible(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
+
+        LabelConsultapor.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        LabelConsultapor.setText("Consulta por:");
+
+        LabelArgumento.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        LabelArgumento.setText("Argumento:");
+
+        ComboBoxConsulta.setEditable(true);
+        ComboBoxConsulta.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        ComboBoxConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Inscricao", "Nome", " " }));
+
+        TextoArgumento.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+
+        BotaoConsultar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        BotaoConsultar.setText("Consultar");
+
+        TabelaClientes.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        TabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código", "Apelido", "Inscricao", "Contato"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TabelaClientes);
+
+        javax.swing.GroupLayout PainelConsultaClienteLayout = new javax.swing.GroupLayout(PainelConsultaCliente);
+        PainelConsultaCliente.setLayout(PainelConsultaClienteLayout);
+        PainelConsultaClienteLayout.setHorizontalGroup(
+            PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelConsultaClienteLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(PainelConsultaClienteLayout.createSequentialGroup()
+                        .addGroup(PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PainelConsultaClienteLayout.createSequentialGroup()
+                                .addComponent(LabelConsultapor)
+                                .addGap(18, 18, 18)
+                                .addComponent(LabelArgumento))
+                            .addGroup(PainelConsultaClienteLayout.createSequentialGroup()
+                                .addComponent(ComboBoxConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TextoArgumento, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoConsultar)))
+                .addGap(12, 12, 12))
+        );
+        PainelConsultaClienteLayout.setVerticalGroup(
+            PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelConsultaClienteLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelConsultapor)
+                    .addComponent(LabelArgumento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PainelConsultaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboBoxConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextoArgumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoConsultar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PainelConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PainelConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
-        setBounds(100, 100, 406, 310);
+        setBounds(300, 300, 697, 405);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void read() {
+        try (Connection connection = new ConnectionFactory().getConnection()) {
+            DefaultTableModel ListaCliente = (DefaultTableModel) TabelaClientes.getModel();
+            ListaCliente.setNumRows(0);
+
+            ClienteDAO cd = new ClienteDAO(connection);
+
+            for (Cliente c : cd.read()) {
+
+                ListaCliente.addRow(new Object[]{
+                    c.getId(),
+                    c.getPessoa().getNome(),
+                    c.getPessoa().getInscricao(),
+                    c.getContato()});
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+
+        if (TabelaClientes.getSelectedRow() != -1) {
+
+            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 1).toString();
+            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 2).toString();
+            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 3).toString();
+            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 4).toString();
+
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotaoConsultar;
+    private javax.swing.JComboBox<String> ComboBoxConsulta;
+    private javax.swing.JLabel LabelArgumento;
+    private javax.swing.JLabel LabelConsultapor;
+    private javax.swing.JPanel PainelConsultaCliente;
+    private javax.swing.JTable TabelaClientes;
+    private javax.swing.JTextField TextoArgumento;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

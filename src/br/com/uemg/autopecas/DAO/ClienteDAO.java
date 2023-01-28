@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author gustavo
  */
-public class ClienteDAO implements CRUD {
+public class ClienteDAO {
 
     private final Connection connection;
 
@@ -23,9 +23,8 @@ public class ClienteDAO implements CRUD {
         this.connection = connection;
     }
 
-    @Override
-    public void create(Object object) throws SQLException {
-        Cliente c = (Cliente) object;//casting
+    public void create(Cliente c) throws SQLException {
+
         String SQL = "INSERT INTO Cliente (tipo, inscricao, nome, apelido, nascimento, logradouro, bairro, cidade, uf, cep, contato, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -62,9 +61,8 @@ public class ClienteDAO implements CRUD {
         }
     }
 
-    @Override
-    public List<Object> read() throws SQLException {
-        List<Object> list = new ArrayList<>();
+    public List<Cliente> read() throws SQLException {
+        List<Cliente> lista = new ArrayList<>();
         String SQL = "SELECT * FROM Cliente";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
@@ -90,7 +88,7 @@ public class ClienteDAO implements CRUD {
                                 result.getString("cep")
                         ));
 
-                list.add(c);
+                lista.add(c);
 
             }
         } catch (SQLException e) {
@@ -98,7 +96,7 @@ public class ClienteDAO implements CRUD {
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
         }
-        return list;
+        return lista;
     }
 
     public List<Cliente> read(Integer busca) throws SQLException {
@@ -143,7 +141,6 @@ public class ClienteDAO implements CRUD {
         return list;
     }
 
-    @Override
     public void update(Object object) throws SQLException {
         Cliente c = (Cliente) object;//casting
         String SQL = "UPDATE Cliente SET tipo = ?, inscricao = ?, nome = ?, apelido = ?, nascimento = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?, cep = ?, contato = ?, email =? WHERE id = ?";
@@ -183,7 +180,6 @@ public class ClienteDAO implements CRUD {
         }
     }
 
-    @Override
     public void delete(Object object) throws SQLException {
         Cliente c = (Cliente) object;
 

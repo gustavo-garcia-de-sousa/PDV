@@ -11,8 +11,6 @@ import br.com.uemg.autopecas.model.Pessoa;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author gustavo
  */
 public class ClienteView extends javax.swing.JInternalFrame {
+
+    public int operacao;
 
     /**
      * Creates new form Cliente
@@ -70,20 +70,39 @@ public class ClienteView extends javax.swing.JInternalFrame {
         TextoFormatadoCadastro = new javax.swing.JFormattedTextField();
         Buscar = new javax.swing.JButton();
         TextoCodigo = new javax.swing.JTextField();
+        BotaoNovo = new javax.swing.JButton();
+        BotaoEditar = new javax.swing.JButton();
+        BotaoCancelar = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(181, 223, 242));
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setClosable(true);
-        setForeground(java.awt.Color.black);
+        setForeground(java.awt.Color.white);
         setResizable(true);
         setTitle("Cadastro de Clientes");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setEnabled(false);
         setVisible(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         LabelNome.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelNome.setText("Nome Completo:");
 
+        TextoNome.setEditable(false);
         TextoNome.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         Painel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -92,6 +111,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         LabelApelido.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelApelido.setText("Apelido:");
 
+        TextoApelido.setEditable(false);
         TextoApelido.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         TextoApelido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,15 +130,18 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
         ComboBoxTipo.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         ComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPF", "CNPJ" }));
+        ComboBoxTipo.setEnabled(false);
 
         LabelContato.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelContato.setText("Contato:");
 
+        TextoContato.setEditable(false);
         TextoContato.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         LabelEmail.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelEmail.setText("E-mail:");
 
+        TextoFormatadoNascimento.setEditable(false);
         try {
             TextoFormatadoNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -126,8 +149,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
         }
         TextoFormatadoNascimento.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
+        TextoEmail.setEditable(false);
         TextoEmail.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
+        TextoFormatadoInscricao.setEditable(false);
         TextoFormatadoInscricao.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout PainelInformacoesPessoaisLayout = new javax.swing.GroupLayout(PainelInformacoesPessoais);
@@ -152,7 +177,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelContato)
                             .addGroup(PainelInformacoesPessoaisLayout.createSequentialGroup()
-                                .addComponent(TextoContato, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                                .addComponent(TextoContato, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                                 .addGap(12, 12, 12))))
                     .addGroup(PainelInformacoesPessoaisLayout.createSequentialGroup()
                         .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,6 +227,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         LabelCEP.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelCEP.setText("CEP:");
 
+        TextoFormatadoCEP.setEditable(false);
         try {
             TextoFormatadoCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
         } catch (java.text.ParseException ex) {
@@ -212,6 +238,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         LabelLogradouro.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelLogradouro.setText("Logradouro:");
 
+        TextoLogradouro.setEditable(false);
         TextoLogradouro.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         TextoLogradouro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,8 +249,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
         LabelBairro.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelBairro.setText("Bairro:");
 
+        TextoBairro.setEditable(false);
         TextoBairro.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
+        TextoCidade.setEditable(false);
         TextoCidade.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         LabelCidade.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -231,6 +260,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
         ComboBoxUF.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         ComboBoxUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        ComboBoxUF.setEnabled(false);
 
         LabelUF.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelUF.setText("UF:");
@@ -257,7 +287,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                                     .addComponent(LabelBairro)
                                     .addComponent(LabelLogradouro)
                                     .addComponent(LabelCidade))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)))
                         .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelUF)
                             .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -290,13 +320,14 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBoxUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         Painel.addTab("Endereço", PainelEndereco);
 
         BotaoGravar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoGravar.setText("Gravar");
+        BotaoGravar.setEnabled(false);
         BotaoGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoGravarActionPerformed(evt);
@@ -309,11 +340,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
         LabelDataCadastro.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelDataCadastro.setText("Data de Cadastro");
 
-        try {
-            TextoFormatadoCadastro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        TextoFormatadoCadastro.setEditable(false);
+        TextoFormatadoCadastro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y/MM/dd"))));
         TextoFormatadoCadastro.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         Buscar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -325,6 +353,32 @@ public class ClienteView extends javax.swing.JInternalFrame {
         });
 
         TextoCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+
+        BotaoNovo.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        BotaoNovo.setText("Novo");
+        BotaoNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoNovoActionPerformed(evt);
+            }
+        });
+
+        BotaoEditar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        BotaoEditar.setText("Editar");
+        BotaoEditar.setEnabled(false);
+        BotaoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoEditarActionPerformed(evt);
+            }
+        });
+
+        BotaoCancelar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        BotaoCancelar.setText("Cancelar");
+        BotaoCancelar.setEnabled(false);
+        BotaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -348,16 +402,22 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(LabelDataCadastro)
                     .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BotaoGravar)
-                    .addComponent(Painel, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Painel, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BotaoNovo)
+                .addGap(17, 17, 17)
+                .addComponent(BotaoCancelar)
+                .addGap(18, 18, 18)
+                .addComponent(BotaoEditar)
+                .addGap(17, 17, 17)
+                .addComponent(BotaoGravar)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelCodigo)
                     .addComponent(LabelNome)
@@ -368,14 +428,18 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(Buscar)
                     .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Painel, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BotaoGravar)
-                .addContainerGap())
+                .addGap(20, 20, 20)
+                .addComponent(Painel, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotaoGravar)
+                    .addComponent(BotaoNovo)
+                    .addComponent(BotaoEditar)
+                    .addComponent(BotaoCancelar))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 700, 500);
+        setBounds(200, 200, 667, 465);
     }// </editor-fold>//GEN-END:initComponents
 
     private void TextoApelidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextoApelidoActionPerformed
@@ -391,37 +455,49 @@ public class ClienteView extends javax.swing.JInternalFrame {
         try (Connection connection = new ConnectionFactory().getConnection()) {
 
             ClienteDAO cd = new ClienteDAO(connection);
-            cd.create(new Cliente(
-                    0, new Pessoa(
-                            (String) ComboBoxTipo.getSelectedItem(),
-                            TextoFormatadoInscricao.getText(),
-                            TextoNome.getText(),
-                            TextoApelido.getText(),
-                            TextoFormatadoNascimento.getText(),
-                            TextoLogradouro.getText(),
-                            TextoBairro.getText(),
-                            TextoCidade.getText(),
-                            (String) ComboBoxUF.getSelectedItem(),
-                            TextoFormatadoCEP.getText()
-                    ),
-                    TextoContato.getText(),
-                    TextoEmail.getText()
-            ));
-            JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
-
-            ComboBoxTipo.setSelectedItem(ABORT);
-            TextoFormatadoInscricao.setText("");
-            TextoNome.setText("");
-            TextoApelido.setText("");
-            TextoFormatadoNascimento.setText("");
-            TextoLogradouro.setText("");
-            TextoBairro.setText("");
-            TextoCidade.setText("");
-            ComboBoxUF.setSelectedItem(ABORT);
-            TextoFormatadoCEP.setText("");
+            if (operacao == 0) {
+                cd.create(new Cliente(
+                        0, new Pessoa(
+                                (String) ComboBoxTipo.getSelectedItem(),
+                                TextoFormatadoInscricao.getText(),
+                                TextoNome.getText(),
+                                TextoApelido.getText(),
+                                TextoFormatadoNascimento.getText(),
+                                TextoLogradouro.getText(),
+                                TextoBairro.getText(),
+                                TextoCidade.getText(),
+                                (String) ComboBoxUF.getSelectedItem(),
+                                TextoFormatadoCEP.getText()
+                        ),
+                        TextoContato.getText(),
+                        TextoEmail.getText()
+                ));
+                JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
+                campos(false);
+            }
+            if (operacao == 1) {
+                cd.update(new Cliente(
+                        Integer.valueOf(TextoCodigo.getText()), new Pessoa(
+                        (String) ComboBoxTipo.getSelectedItem(),
+                        TextoFormatadoInscricao.getText(),
+                        TextoNome.getText(),
+                        TextoApelido.getText(),
+                        TextoFormatadoNascimento.getText(),
+                        TextoLogradouro.getText(),
+                        TextoBairro.getText(),
+                        TextoCidade.getText(),
+                        (String) ComboBoxUF.getSelectedItem(),
+                        TextoFormatadoCEP.getText()
+                ),
+                        TextoContato.getText(),
+                        TextoEmail.getText()
+                ));
+                JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
+                campos(false);
+            }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Não foi possível concluir a solicitação");
         }
 
     }//GEN-LAST:event_BotaoGravarActionPerformed
@@ -432,7 +508,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
             if (TextoCodigo.getText().equals("")) {
 
-                //código a ser implementado
+                ConsultaClienteView cliente = new ConsultaClienteView();
+                PrincipalView.DesktopPanePrincipal.add(cliente);
+                cliente.setVisible(true);
+                PrincipalView.DesktopPanePrincipal.setComponentZOrder(cliente, 0);
+
             } else {
 
                 ClienteDAO cd = new ClienteDAO(connection);
@@ -443,15 +523,40 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 List<Cliente> c = cd.read(id);
 
                 preencher(c);
+                BotaoEditar.setEnabled(true);
 
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível concluir a solicitação");
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_BuscarActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        PrincipalView.ClienteView = true;
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void BotaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoActionPerformed
+        // TODO add your handling code here:
+        operacao = 0;
+        limpar();
+        campos(true);
+    }//GEN-LAST:event_BotaoNovoActionPerformed
+
+    private void BotaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarActionPerformed
+        // TODO add your handling code here:
+        operacao = 1;
+        campos(true);
+    }//GEN-LAST:event_BotaoEditarActionPerformed
+
+    private void BotaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarActionPerformed
+        // TODO add your handling code here:
+        limpar();
+        campos(false);
+    }//GEN-LAST:event_BotaoCancelarActionPerformed
 
     public void preencher(List<Cliente> cliente) {
 
@@ -467,8 +572,45 @@ public class ClienteView extends javax.swing.JInternalFrame {
         ComboBoxUF.setSelectedItem(cliente.get(0).getPessoa().getUf());
     }
 
+    public void limpar() {
+
+        ComboBoxTipo.setSelectedItem(ABORT);
+        TextoFormatadoInscricao.setText("");
+        TextoNome.setText("");
+        TextoApelido.setText("");
+        TextoFormatadoNascimento.setText("");
+        TextoEmail.setText("");
+        TextoContato.setText("");
+        TextoLogradouro.setText("");
+        TextoBairro.setText("");
+        TextoCidade.setText("");
+        ComboBoxUF.setSelectedItem(ABORT);
+        TextoFormatadoCEP.setText("");
+    }
+
+    public void campos(boolean status) {
+        ComboBoxTipo.setEnabled(status);
+        TextoFormatadoInscricao.setEditable(status);
+        TextoFormatadoInscricao.setEditable(status);
+        TextoNome.setEditable(status);
+        TextoApelido.setEditable(status);
+        TextoEmail.setEditable(status);
+        TextoContato.setEditable(status);
+        TextoFormatadoNascimento.setEditable(status);
+        TextoLogradouro.setEditable(status);
+        TextoBairro.setEditable(status);
+        TextoCidade.setEditable(status);
+        ComboBoxUF.setEnabled(status);
+        TextoFormatadoCEP.setEditable(status);
+        BotaoCancelar.setEnabled(status);
+        BotaoGravar.setEnabled(status);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotaoCancelar;
+    private javax.swing.JButton BotaoEditar;
     private javax.swing.JButton BotaoGravar;
+    private javax.swing.JButton BotaoNovo;
     private javax.swing.JButton Buscar;
     private javax.swing.JComboBox<String> ComboBoxTipo;
     private javax.swing.JComboBox<String> ComboBoxUF;
