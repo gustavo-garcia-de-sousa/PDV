@@ -88,7 +88,8 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(DesktopPanePrincipal)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(800, 700));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemClienteActionPerformed

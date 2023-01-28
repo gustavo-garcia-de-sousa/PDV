@@ -93,40 +93,52 @@ public class ClienteDAO implements CRUD {
                 list.add(c);
 
             }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
         return list;
     }
 
-    public List<Object> read(Object object) throws SQLException {
-        List<Object> list = new ArrayList<>();
-        Cliente c = (Cliente) object;//casting
+    public List<Cliente> read(Integer busca) throws SQLException {
+
+        List<Cliente> list = new ArrayList();
+
         String SQL = "SELECT * FROM Cliente WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
 
-            statement.setInt(1, c.getId());
-
+            statement.setInt(1, busca);
             statement.execute();
 
             ResultSet result = statement.getResultSet();
 
-            c.setId(result.getInt("id"));
-            c.setPessoa(
-                    new Pessoa(
-                            result.getString("tipo"),
-                            result.getString("inscricao"),
-                            result.getString("apelido"),
-                            result.getString("nome"),
-                            result.getString("nascimento"),
-                            result.getString("logradouro"),
-                            result.getString("bairro"),
-                            result.getString("cidade"),
-                            result.getString("uf"),
-                            result.getString("cep")
-                    ));
+            while (result.next()) {
+                Cliente c = new Cliente();
 
-            list.add(c);
+                c.setId(result.getInt("id"));
+                c.setPessoa(
+                        new Pessoa(
+                                result.getString("tipo"),
+                                result.getString("inscricao"),
+                                result.getString("apelido"),
+                                result.getString("nome"),
+                                result.getString("nascimento"),
+                                result.getString("logradouro"),
+                                result.getString("bairro"),
+                                result.getString("cidade"),
+                                result.getString("uf"),
+                                result.getString("cep")
+                        ));
 
+                list.add(c);
+
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
         return list;
     }
