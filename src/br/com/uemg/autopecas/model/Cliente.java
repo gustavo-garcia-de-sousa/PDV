@@ -4,28 +4,26 @@ package br.com.uemg.autopecas.model;
  *
  * @author gustavo
  */
-public class Fornecedor {
+public class Cliente {
 
     private Integer id;
     private Pessoa pessoa;
     private String contato;
     private String email;
-    private String responsavel;
     private String cadastro;
 
-    public Fornecedor() {
+    public Cliente() {
     }
 
-    public Fornecedor(Integer id) {
+    public Cliente(Integer id) {
         this.id = id;
     }
 
-    public Fornecedor(Integer id, Pessoa pessoa, String contato, String email, String responsavel) {
+    public Cliente(Integer id, Pessoa pessoa, String contato, String email) {
         this.id = id;
-        this.pessoa = new Pessoa();
+        this.pessoa = pessoa;
         this.contato = contato;
         this.email = email;
-        this.responsavel = responsavel;
     }
 
     public Integer getId() {
@@ -60,16 +58,12 @@ public class Fornecedor {
         this.email = email;
     }
 
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
-    }
-
     public String getCadastro() {
         return cadastro;
+    }
+
+    public void setCadastro(String cadastro) {
+        this.cadastro = cadastro;
     }
 
     @Override

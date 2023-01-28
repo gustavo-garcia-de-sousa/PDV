@@ -33,21 +33,19 @@ public class FornecedorDAO implements CRUD {
 
             connection.setAutoCommit(false);//desligando transação automática
 
-            System.out.println(f.getPessoa().getCEP());
-
             statement.setString(1, f.getPessoa().getTipo());
-            statement.setObject(2, f.getPessoa().getInscricao());
+            statement.setString(2, f.getPessoa().getInscricao());
             statement.setString(3, f.getPessoa().getNome());
-            statement.setObject(4, f.getPessoa().getApelido());
-            statement.setObject(5, f.getPessoa().getNascimento());
-            statement.setObject(6, f.getPessoa().getLogradouro());
-            statement.setObject(7, f.getPessoa().getBairro());
-            statement.setObject(8, f.getPessoa().getCidade());
-            statement.setObject(9, f.getPessoa().getUf());
-            statement.setObject(10, f.getPessoa().getCEP());
-            statement.setObject(11, f.getContato());
-            statement.setObject(12, f.getEmail());
-            statement.setObject(13, f.getResponsavel());
+            statement.setString(4, f.getPessoa().getApelido());
+            statement.setString(5, f.getPessoa().getNascimento());
+            statement.setString(6, f.getPessoa().getLogradouro());
+            statement.setString(7, f.getPessoa().getBairro());
+            statement.setString(8, f.getPessoa().getCidade());
+            statement.setString(9, f.getPessoa().getUf());
+            statement.setString(10, f.getPessoa().getCEP());
+            statement.setString(11, f.getContato());
+            statement.setString(12, f.getEmail());
+            statement.setString(13, f.getResponsavel());
 
             statement.execute();
 
@@ -62,7 +60,7 @@ public class FornecedorDAO implements CRUD {
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
-            System.out.println("rollback executado");
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
     }
 
@@ -103,12 +101,68 @@ public class FornecedorDAO implements CRUD {
 
     @Override
     public void update(Object object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Fornecedor f = (Fornecedor) object;//casting
+        String SQL = "UPDATE Fornecedor SET tipo = ?, inscricao = ?, nome = ?, apelido = ?, nascimento = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?, cep = ?, contato = ?, email =?, responsavel = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
+
+            statement.setString(1, f.getPessoa().getTipo());
+            statement.setString(2, f.getPessoa().getInscricao());
+            statement.setString(3, f.getPessoa().getNome());
+            statement.setString(4, f.getPessoa().getApelido());
+            statement.setString(5, f.getPessoa().getNascimento());
+            statement.setString(6, f.getPessoa().getLogradouro());
+            statement.setString(7, f.getPessoa().getBairro());
+            statement.setString(8, f.getPessoa().getCidade());
+            statement.setString(9, f.getPessoa().getUf());
+            statement.setString(10, f.getPessoa().getCEP());
+            statement.setString(11, f.getContato());
+            statement.setString(12, f.getEmail());
+            statement.setString(13, f.getResponsavel());
+            statement.setInt(14, f.getId());
+
+            statement.execute();
+
+            connection.commit();//enviando transação
+
+            try (ResultSet result = statement.getGeneratedKeys()) {
+
+                while (result.next()) {
+                    f.setId(result.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+        }
     }
 
     @Override
     public void delete(Object object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Fornecedor f = (Fornecedor) object;
+
+        String SQL = "DELETE FROM Fornecedor WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
+
+            statement.setInt(1, f.getId());
+
+            statement.execute();
+
+            System.out.println("REGISTROS DELETADOS: " + statement.getUpdateCount());
+
+            connection.commit();//enviando transação
+
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+        }
     }
 
 }

@@ -45,7 +45,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "código: " + this.id + " nome: " + this.nome + " senha: " + this.senha + " cargo: " + this.cargo;
+        return "|id: " + this.id + " |nome: " + this.nome + " |senha: " + this.senha + " |cargo: " + this.cargo + " |";
     }
 
 }

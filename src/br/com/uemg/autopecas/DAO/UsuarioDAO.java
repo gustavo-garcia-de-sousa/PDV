@@ -55,7 +55,7 @@ public class UsuarioDAO implements CRUD {
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
-            System.out.println("rollback executado");
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
     }
 
@@ -111,7 +111,7 @@ public class UsuarioDAO implements CRUD {
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
-            System.out.println("rollback executado");
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
     }
 
@@ -125,8 +125,6 @@ public class UsuarioDAO implements CRUD {
 
             connection.setAutoCommit(false);//desligando transação automática
 
-            System.out.println(u.getId());
-
             statement.setInt(1, u.getId());
 
             statement.execute();
@@ -138,7 +136,7 @@ public class UsuarioDAO implements CRUD {
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
-            System.out.println("rollback executado");
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
 
     }

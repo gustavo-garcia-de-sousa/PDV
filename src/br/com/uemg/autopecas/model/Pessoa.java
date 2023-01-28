@@ -9,7 +9,7 @@ public class Pessoa {
     private String tipo;
     private String inscricao;
     private String apelido;
-    private String nome;//nome social
+    private String nome;
     private String nascimento;
     private String logradouro;
     private String bairro;
@@ -20,9 +20,9 @@ public class Pessoa {
     public Pessoa() {
     }
 
-    public Pessoa(String tipo, String CNPJ, String apelido, String nome, String abertura, String logradouro, String bairro, String cidade, String uf, String CEP) {
+    public Pessoa(String tipo, String inscricao, String apelido, String nome, String abertura, String logradouro, String bairro, String cidade, String uf, String CEP) {
         this.tipo = tipo;
-        this.inscricao = CNPJ;
+        this.inscricao = inscricao;
         this.apelido = apelido;
         this.nome = nome;
         this.nascimento = abertura;
