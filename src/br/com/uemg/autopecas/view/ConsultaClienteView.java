@@ -19,7 +19,6 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
     /**
      * Creates new form ConsultaClienteView
      */
-    Cliente cc = new Cliente();
     ClienteView ccview = new ClienteView();
 
     public ConsultaClienteView() {
@@ -192,6 +191,7 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
             ClienteDAO cd = new ClienteDAO(connection);
 
             for (Cliente c : cd.read(busca)) {
+                //**/
 
                 ListaCliente.addRow(new Object[]{
                     c.getId(),
@@ -227,10 +227,11 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BotaoConsultarActionPerformed
 
     private void TabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMouseClicked
+        Cliente c = new Cliente();
 
-        cc.setId(Integer.valueOf(TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 0).toString()));
-        ccview.capturar(cc);
-        ClienteView.TextoCodigo.setText(String.valueOf(cc.getId()));
+        c.setId(Integer.valueOf(TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 0).toString()));
+
+        ccview.capturar(c);
         dispose();
 
         // TODO add your handling code here:
