@@ -87,6 +87,9 @@ public class ClienteDAO {
                                 result.getString("uf"),
                                 result.getString("cep")
                         ));
+                c.setContato(result.getString("contato"));
+                c.setEmail(result.getString("email"));
+                c.setCadastro(result.getString("cadastro"));
 
                 lista.add(c);
 
@@ -138,6 +141,52 @@ public class ClienteDAO {
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
         }
+        return list;
+    }
+
+    public List<Cliente> read(String busca) throws SQLException {
+
+        List<Cliente> list = new ArrayList();
+
+        String SQL = "SELECT * FROM Cliente WHERE nome LIKE ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            statement.setString(1, "%" + busca + "%");
+            statement.execute();
+
+            ResultSet result = statement.getResultSet();
+
+            while (result.next()) {
+                Cliente c = new Cliente();
+
+                c.setId(result.getInt("id"));
+                c.setPessoa(
+                        new Pessoa(
+                                result.getString("tipo"),
+                                result.getString("inscricao"),
+                                result.getString("apelido"),
+                                result.getString("nome"),
+                                result.getString("nascimento"),
+                                result.getString("logradouro"),
+                                result.getString("bairro"),
+                                result.getString("cidade"),
+                                result.getString("uf"),
+                                result.getString("cep")
+                        ));
+                c.setContato(result.getString("contato"));
+                c.setEmail(result.getString("email"));
+                c.setCadastro(result.getString("cadastro"));
+
+                list.add(c);
+
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+        }
+
         return list;
     }
 
