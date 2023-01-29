@@ -36,7 +36,11 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GRACH Sistemas");
+        setTitle("GRACH AUTO PEÇAS");
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        setForeground(new java.awt.Color(0, 0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -46,7 +50,7 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
-        DesktopPanePrincipal.setBackground(new java.awt.Color(180, 231, 211));
+        DesktopPanePrincipal.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout DesktopPanePrincipalLayout = new javax.swing.GroupLayout(DesktopPanePrincipal);
         DesktopPanePrincipal.setLayout(DesktopPanePrincipalLayout);
@@ -56,13 +60,16 @@ public class PrincipalView extends javax.swing.JFrame {
         );
         DesktopPanePrincipalLayout.setVerticalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 639, Short.MAX_VALUE)
+            .addGap(0, 642, Short.MAX_VALUE)
         );
 
+        MenuBarPrincipal.setBorder(null);
+        MenuBarPrincipal.setToolTipText("");
         MenuBarPrincipal.setFont(new java.awt.Font("Liberation Sans", 1, 20)); // NOI18N
         MenuBarPrincipal.setInheritsPopupMenu(true);
 
-        MenuCadastro.setText("Cadastro");
+        MenuCadastro.setText("CADASTRO");
+        MenuCadastro.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         MenuCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenuCadastroActionPerformed(evt);
@@ -70,8 +77,8 @@ public class PrincipalView extends javax.swing.JFrame {
         });
 
         MenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        MenuItemCliente.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        MenuItemCliente.setText("Cliente");
+        MenuItemCliente.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        MenuItemCliente.setText("CLIENTE");
         MenuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenuItemClienteActionPerformed(evt);
@@ -81,10 +88,12 @@ public class PrincipalView extends javax.swing.JFrame {
 
         MenuBarPrincipal.add(MenuCadastro);
 
-        MenuPedido.setText("Pedido");
+        MenuPedido.setText("PEDIDO");
+        MenuPedido.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         MenuBarPrincipal.add(MenuPedido);
 
-        MenuSobre.setText("Sobre");
+        MenuSobre.setText("SOBRE");
+        MenuSobre.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         MenuBarPrincipal.add(MenuSobre);
 
         setJMenuBar(MenuBarPrincipal);
@@ -97,7 +106,7 @@ public class PrincipalView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(DesktopPanePrincipal)
+            .addComponent(DesktopPanePrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
