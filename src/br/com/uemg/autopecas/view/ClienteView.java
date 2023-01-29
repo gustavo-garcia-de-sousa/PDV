@@ -18,14 +18,15 @@ import javax.swing.JOptionPane;
  * @author gustavo
  */
 public class ClienteView extends javax.swing.JInternalFrame {
-    
-    public int operacao;
+
+    public int transacao;
 
     /**
      * Creates new form Cliente
      */
     public ClienteView() {
         initComponents();
+        
     }
 
     /**
@@ -78,6 +79,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Cadastro de Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18))); // NOI18N
         setClosable(true);
         setForeground(java.awt.Color.white);
+        setResizable(true);
         setToolTipText("");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setInputVerifier(getInputVerifier());
@@ -476,17 +478,18 @@ public class ClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_TextoLogradouroActionPerformed
 
     private void BotaoGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoGravarActionPerformed
-        
+
         gravar();
+        TextoCodigo.setEnabled(true);
         BotaoNovo.setEnabled(true);
         BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoGravarActionPerformed
-    
+
     public void gravar() {
         try (Connection connection = new ConnectionFactory().getConnection()) {
-            
+
             ClienteDAO cd = new ClienteDAO(connection);
-            if (operacao == 0) {
+            if (transacao == 0) {
                 cd.create(new Cliente(
                         0, new Pessoa(
                                 (String) ComboBoxTipo.getSelectedItem(),
@@ -506,13 +509,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
                 campos(false);
             }
-            if (operacao == 1) {
+            if (transacao == 1) {
                 cd.update(new Cliente(
                         Integer.valueOf(TextoCodigo.getText()), new Pessoa(
                         (String) ComboBoxTipo.getSelectedItem(),
                         TextoFormatadoInscricao.getText(),
-                        TextoNome.getText(),
                         TextoApelido.getText(),
+                        TextoNome.getText(),
                         TextoFormatadoNascimento.getText(),
                         TextoLogradouro.getText(),
                         TextoBairro.getText(),
@@ -526,48 +529,48 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
                 campos(false);
             }
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a solicitação");
         }
     }
 
     private void BotaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarActionPerformed
-        buscar(TextoCodigo.getText());
+        if (TextoCodigo.getText().isEmpty()) {
+            buscar(0);
+        } else {
+            buscar(Integer.valueOf(TextoCodigo.getText()));
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoBuscarActionPerformed
-    
-    public void buscar(String busca) {
-        
-        System.out.println("busca: " + busca);
-        
-        TextoCodigo.setText(busca);
-        
+
+    public void buscar(Integer busca) {
+
+        System.out.println("método buscar(): " + busca);
+
         try (Connection connection = new ConnectionFactory().getConnection()) {
-            
-            if (busca.equals("")) {
-                
+
+            if (busca != 0) {
+
+                ClienteDAO dao = new ClienteDAO(connection);
+
+                List<Cliente> c = dao.read(busca);
+                System.out.println(c);
+                BotaoEditar.setEnabled(true);
+                preencher(c);
+                campos(false);
+            } else {
+
                 ConsultaClienteView cliente = new ConsultaClienteView();
                 PrincipalView.DesktopPanePrincipal.add(cliente);
                 cliente.setVisible(true);
                 PrincipalView.DesktopPanePrincipal.setComponentZOrder(cliente, 0);
-                
-            } else {
-                
-                ClienteDAO dao = new ClienteDAO(connection);
-                
-                Integer id = Integer.valueOf(
-                        TextoCodigo.getText());
-                
-                List<Cliente> c = dao.read(id);
-                System.out.println(c);
-                preencher(c);
-                BotaoEditar.setEnabled(true);
-                
+
             }
-            
+
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível concluir a solicitação");
+            JOptionPane.showMessageDialog(null, "Não conseguimos recuperar esses dados");
         }
     }
 
@@ -578,16 +581,19 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
     private void BotaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoActionPerformed
         // TODO add your handling code here:
-        operacao = 0;
+        transacao = 0;
         limpar();
         campos(true);
+        TextoCodigo.setEnabled(false);
+        TextoFormatadoCadastro.setEnabled(false);
         BotaoNovo.setEnabled(false);
     }//GEN-LAST:event_BotaoNovoActionPerformed
 
     private void BotaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarActionPerformed
         // TODO add your handling code here:
-        operacao = 1;
+        transacao = 1;
         campos(true);
+        TextoCodigo.setEnabled(false);
         BotaoEditar.setEnabled(false);
         BotaoNovo.setEnabled(false);
     }//GEN-LAST:event_BotaoEditarActionPerformed
@@ -596,6 +602,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         limpar();
         campos(false);
+        TextoCodigo.setEnabled(true);
         BotaoNovo.setEnabled(true);
     }//GEN-LAST:event_BotaoCancelarActionPerformed
 
@@ -603,46 +610,44 @@ public class ClienteView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         excluir();
     }//GEN-LAST:event_BotaoExcluirActionPerformed
-    
+
     public void excluir() {
         try (Connection connection = new ConnectionFactory().getConnection()) {
-            
+
             if (JOptionPane.showConfirmDialog(null, "Deseja excluir o registro?", "Confirmação de exclusão!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                
+
                 ClienteDAO dao = new ClienteDAO(connection);
                 Cliente c = new Cliente();
-                
+
                 Integer id = Integer.valueOf(
                         TextoCodigo.getText());
-                
+
                 c.setId(id);
                 dao.delete(c);
                 limpar();
             }
-            
+
             JOptionPane.showMessageDialog(null, "Excluído no Banco de Dados");
             campos(false);
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível concluir a solicitação");
         }
     }
-    
+
     public void capturar(Cliente cliente) {
-        
-        System.out.println(String.valueOf(cliente.getId()));
-        
-        int id = cliente.getId();
-        
-        buscar(String.valueOf(id));
-        
+
+        System.out.println("function capturar(): " + cliente.getId());
+
+        TextoCodigo.setText(String.valueOf(cliente.getId()));
+        limpar();
+        buscar(cliente.getId());
+
     }
-    
+
     public void preencher(List<Cliente> cliente) {
-        
-        int id = cliente.get(0).getId();
-        
-        TextoCodigo.setText(String.valueOf(id));
+
+        TextoCodigo.setText(String.valueOf(cliente.get(0).getId()));
         TextoNome.setText(cliente.get(0).getPessoa().getNome());
         //TextoFormatadoCadastro.setText(cliente.getCadastro());
         TextoApelido.setText(cliente.get(0).getPessoa().getApelido());
@@ -654,9 +659,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
         TextoCidade.setText(cliente.get(0).getPessoa().getCidade());
         ComboBoxUF.setSelectedItem(cliente.get(0).getPessoa().getUf());
     }
-    
+
     public void limpar() {
-        
+
+        TextoCodigo.setText("");
         ComboBoxTipo.setSelectedItem(ABORT);
         TextoFormatadoInscricao.setText("");
         TextoNome.setText("");
@@ -670,7 +676,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         ComboBoxUF.setSelectedItem(ABORT);
         TextoFormatadoCEP.setText("");
     }
-    
+
     public void campos(boolean status) {
         ComboBoxTipo.setEnabled(status);
         TextoFormatadoInscricao.setEditable(status);
