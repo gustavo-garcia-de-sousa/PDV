@@ -615,9 +615,9 @@ public class ClienteView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
         BotaoNovo.setEnabled(true);
-        limpar();
-        campos(false);
+           campos(false);
         TextoCodigo.setEnabled(true);
+        BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoCancelarActionPerformed
 
     private void BotaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoExcluirActionPerformed
