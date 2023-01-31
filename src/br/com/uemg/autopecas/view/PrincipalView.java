@@ -41,6 +41,7 @@ public class PrincipalView extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         setForeground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(500, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -60,9 +61,10 @@ public class PrincipalView extends javax.swing.JFrame {
         );
         DesktopPanePrincipalLayout.setVerticalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 642, Short.MAX_VALUE)
+            .addGap(0, 497, Short.MAX_VALUE)
         );
 
+        MenuBarPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         MenuBarPrincipal.setBorder(null);
         MenuBarPrincipal.setToolTipText("");
         MenuBarPrincipal.setFont(new java.awt.Font("Liberation Sans", 1, 20)); // NOI18N
@@ -106,7 +108,7 @@ public class PrincipalView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(DesktopPanePrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(DesktopPanePrincipal)
         );
 
         pack();

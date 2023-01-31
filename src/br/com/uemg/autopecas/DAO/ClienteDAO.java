@@ -62,7 +62,7 @@ public class ClienteDAO {
     }
 
     public List<Cliente> read() throws SQLException {
-        List<Cliente> lista = new ArrayList<>();
+        List<Cliente> list = new ArrayList<>();
         String SQL = "SELECT * FROM Cliente";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
@@ -91,7 +91,7 @@ public class ClienteDAO {
                 c.setEmail(result.getString("email"));
                 c.setCadastro(result.getString("cadastro"));
 
-                lista.add(c);
+                list.add(c);
 
             }
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class ClienteDAO {
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
         }
-        return lista;
+        return list;
     }
 
     public List<Cliente> read(Integer busca) throws SQLException {
@@ -132,6 +132,11 @@ public class ClienteDAO {
                                 result.getString("uf"),
                                 result.getString("cep")
                         ));
+                c.setContato(result.getString("contato"));
+                c.setEmail(result.getString("email"));
+                c.setCadastro(result.getString("cadastro"));
+
+                list.add(c);
 
                 list.add(c);
 
@@ -190,8 +195,8 @@ public class ClienteDAO {
         return list;
     }
 
-    public void update(Object object) throws SQLException {
-        Cliente c = (Cliente) object;//casting
+    public void update(Cliente c) throws SQLException {
+
         String SQL = "UPDATE Cliente SET tipo = ?, inscricao = ?, nome = ?, apelido = ?, nascimento = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?, cep = ?, contato = ?, email =? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -229,8 +234,7 @@ public class ClienteDAO {
         }
     }
 
-    public void delete(Object object) throws SQLException {
-        Cliente c = (Cliente) object;
+    public void delete(Cliente c) throws SQLException {
 
         String SQL = "DELETE FROM Cliente WHERE id = ?";
 

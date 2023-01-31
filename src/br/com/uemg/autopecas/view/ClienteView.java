@@ -26,7 +26,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
      */
     public ClienteView() {
         initComponents();
-        
+
     }
 
     /**
@@ -191,7 +191,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PainelInformacoesPessoaisLayout.createSequentialGroup()
                                 .addComponent(LabelContato)
-                                .addGap(0, 241, Short.MAX_VALUE))
+                                .addGap(0, 277, Short.MAX_VALUE))
                             .addComponent(TextoContato))))
                 .addContainerGap())
         );
@@ -280,15 +280,14 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(TextoLogradouro)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelEnderecoLayout.createSequentialGroup()
                         .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PainelEnderecoLayout.createSequentialGroup()
-                                .addComponent(TextoBairro)
-                                .addGap(18, 18, 18))
+                            .addComponent(TextoBairro)
                             .addGroup(PainelEnderecoLayout.createSequentialGroup()
                                 .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(LabelBairro)
                                     .addComponent(LabelLogradouro)
                                     .addComponent(LabelCidade))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)))
+                                .addGap(0, 420, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
                         .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelUF)
                             .addGroup(PainelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -329,6 +328,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoGravar.setBackground(new java.awt.Color(0, 102, 102));
         BotaoGravar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoGravar.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/sign-check-icon_34365.png"))); // NOI18N
         BotaoGravar.setText("Gravar");
         BotaoGravar.setEnabled(false);
         BotaoGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -350,7 +350,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoBuscar.setBackground(new java.awt.Color(0, 102, 102));
         BotaoBuscar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        BotaoBuscar.setText("...");
+        BotaoBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/search-icon_34373.png"))); // NOI18N
         BotaoBuscar.setToolTipText("");
         BotaoBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,6 +363,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoNovo.setBackground(new java.awt.Color(0, 102, 102));
         BotaoNovo.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoNovo.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/sign-add-icon_34367.png"))); // NOI18N
         BotaoNovo.setText("Novo");
         BotaoNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,9 +371,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
             }
         });
 
-        BotaoEditar.setBackground(new java.awt.Color(0, 0, 102));
+        BotaoEditar.setBackground(new java.awt.Color(51, 102, 255));
         BotaoEditar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoEditar.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/pencil-icon_34383.png"))); // NOI18N
         BotaoEditar.setText("Editar");
         BotaoEditar.setEnabled(false);
         BotaoEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -384,6 +386,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoCancelar.setBackground(new java.awt.Color(204, 0, 0));
         BotaoCancelar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/sign-error-icon_34362.png"))); // NOI18N
         BotaoCancelar.setText("Cancelar");
         BotaoCancelar.setEnabled(false);
         BotaoCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -395,6 +398,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoExcluir.setBackground(new java.awt.Color(204, 0, 0));
         BotaoExcluir.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         BotaoExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/uemg/autopecas/assets/trashcan-full-icon_34338.png"))); // NOI18N
         BotaoExcluir.setText("Excluir");
         BotaoExcluir.setEnabled(false);
         BotaoExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -407,38 +411,41 @@ public class ClienteView extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(BotaoBuscar))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(LabelCodigo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(LabelNome)))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(LabelDataCadastro)
-                                .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(Painel, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Painel)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BotaoNovo)
-                        .addGap(18, 18, 18)
+                        .addGap(6, 6, 6)
+                        .addComponent(BotaoNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoExcluir)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoEditar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoGravar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(BotaoGravar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LabelCodigo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(LabelNome)
+                                .addGap(92, 92, 92))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TextoNome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BotaoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(LabelDataCadastro))
+                            .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,11 +457,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(LabelDataCadastro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotaoBuscar)
-                    .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(TextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextoFormatadoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addComponent(Painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -466,7 +473,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        setBounds(150, 50, 700, 525);
+        setBounds(150, 50, 707, 525);
     }// </editor-fold>//GEN-END:initComponents
 
     private void TextoApelidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextoApelidoActionPerformed
@@ -480,7 +487,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void BotaoGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoGravarActionPerformed
 
         gravar();
-        TextoCodigo.setEnabled(true);
+        TextoCodigo.setEnabled(false);
         BotaoNovo.setEnabled(true);
         BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoGravarActionPerformed
@@ -488,9 +495,9 @@ public class ClienteView extends javax.swing.JInternalFrame {
     public void gravar() {
         try (Connection connection = new ConnectionFactory().getConnection()) {
 
-            ClienteDAO cd = new ClienteDAO(connection);
+            ClienteDAO dao = new ClienteDAO(connection);
             if (transacao == 0) {
-                cd.create(new Cliente(
+                dao.create(new Cliente(
                         0, new Pessoa(
                                 (String) ComboBoxTipo.getSelectedItem(),
                                 TextoFormatadoInscricao.getText(),
@@ -507,10 +514,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         TextoEmail.getText()
                 ));
                 JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
+                TextoCodigo.setText("");
                 campos(false);
             }
             if (transacao == 1) {
-                cd.update(new Cliente(
+                dao.update(new Cliente(
                         Integer.valueOf(TextoCodigo.getText()), new Pessoa(
                         (String) ComboBoxTipo.getSelectedItem(),
                         TextoFormatadoInscricao.getText(),
@@ -538,6 +546,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void BotaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarActionPerformed
         if (TextoCodigo.getText().isEmpty()) {
             buscar(0);
+            BotaoNovo.setEnabled(true);
         } else {
             buscar(Integer.valueOf(TextoCodigo.getText()));
         }
@@ -556,12 +565,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 ClienteDAO dao = new ClienteDAO(connection);
 
                 List<Cliente> c = dao.read(busca);
-                System.out.println(c);
+                System.out.println("objeto:" + c);
+                TextoCodigo.setEnabled(false);
                 BotaoEditar.setEnabled(true);
                 preencher(c);
                 campos(false);
             } else {
-
+                TextoCodigo.setEnabled(false);
                 ConsultaClienteView cliente = new ConsultaClienteView();
                 PrincipalView.DesktopPanePrincipal.add(cliente);
                 cliente.setVisible(true);
@@ -570,7 +580,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Não conseguimos recuperar esses dados");
+            JOptionPane.showMessageDialog(null, "Não conseguimos recuperar essa informação");
         }
     }
 
@@ -582,11 +592,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void BotaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoActionPerformed
         // TODO add your handling code here:
         transacao = 0;
-        limpar();
-        campos(true);
         TextoCodigo.setEnabled(false);
         TextoFormatadoCadastro.setEnabled(false);
         BotaoNovo.setEnabled(false);
+        BotaoEditar.setEnabled(false);
+        limpar();
+        campos(true);
+
     }//GEN-LAST:event_BotaoNovoActionPerformed
 
     private void BotaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarActionPerformed
@@ -600,10 +612,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
     private void BotaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarActionPerformed
         // TODO add your handling code here:
+
+        BotaoNovo.setEnabled(true);
         limpar();
         campos(false);
         TextoCodigo.setEnabled(true);
-        BotaoNovo.setEnabled(true);
     }//GEN-LAST:event_BotaoCancelarActionPerformed
 
     private void BotaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoExcluirActionPerformed
@@ -637,11 +650,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
     public void capturar(Cliente cliente) {
 
-        System.out.println("function capturar(): " + cliente.getId());
+        System.out.println("método capturar(): " + cliente.getId());
 
         TextoCodigo.setText(String.valueOf(cliente.getId()));
-        limpar();
-        buscar(cliente.getId());
+        TextoCodigo.requestFocus();
 
     }
 
@@ -654,8 +666,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
         ComboBoxTipo.setSelectedItem(cliente.get(0).getPessoa().getTipo());
         TextoFormatadoInscricao.setText(cliente.get(0).getPessoa().getInscricao());
         TextoFormatadoNascimento.setText(cliente.get(0).getPessoa().getNascimento());
+        TextoContato.setText(cliente.get(0).getContato());
+        TextoEmail.setText(cliente.get(0).getEmail());
         TextoLogradouro.setText(cliente.get(0).getPessoa().getLogradouro());
         TextoBairro.setText(cliente.get(0).getPessoa().getBairro());
+        TextoFormatadoCEP.setText(cliente.get(0).getPessoa().getCEP());
         TextoCidade.setText(cliente.get(0).getPessoa().getCidade());
         ComboBoxUF.setSelectedItem(cliente.get(0).getPessoa().getUf());
     }
