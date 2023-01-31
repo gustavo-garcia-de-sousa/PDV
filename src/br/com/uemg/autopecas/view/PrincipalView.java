@@ -10,8 +10,6 @@ package br.com.uemg.autopecas.view;
  */
 public class PrincipalView extends javax.swing.JFrame {
 
-    public static boolean ClienteView = false;
-
     /**
      * Creates new form Principal
      */
@@ -32,6 +30,7 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuBarPrincipal = new javax.swing.JMenuBar();
         MenuCadastro = new javax.swing.JMenu();
         MenuItemCliente = new javax.swing.JMenuItem();
+        MenuItemFornecedor = new javax.swing.JMenuItem();
         MenuPedido = new javax.swing.JMenu();
         MenuSobre = new javax.swing.JMenu();
 
@@ -88,6 +87,16 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuCadastro.add(MenuItemCliente);
 
+        MenuItemFornecedor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        MenuItemFornecedor.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        MenuItemFornecedor.setText("FORNECEDOR");
+        MenuItemFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemFornecedorActionPerformed(evt);
+            }
+        });
+        MenuCadastro.add(MenuItemFornecedor);
+
         MenuBarPrincipal.add(MenuCadastro);
 
         MenuPedido.setText("PEDIDO");
@@ -117,11 +126,11 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void MenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemClienteActionPerformed
         // TODO add your handling code here:
-        if (ClienteView == false) {
-            ClienteView cliente = new ClienteView();
-            DesktopPanePrincipal.add(cliente);
-            cliente.setVisible(true);
-        }
+
+        ClienteView cliente = new ClienteView();
+        DesktopPanePrincipal.add(cliente);
+        cliente.setVisible(true);
+
 
     }//GEN-LAST:event_MenuItemClienteActionPerformed
 
@@ -136,6 +145,15 @@ public class PrincipalView extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowOpened
+
+    private void MenuItemFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemFornecedorActionPerformed
+        // TODO add your handling code here:
+
+        FornecedorView fornecedor = new FornecedorView();
+        DesktopPanePrincipal.add(fornecedor);
+        fornecedor.setVisible(true);
+
+    }//GEN-LAST:event_MenuItemFornecedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,6 +194,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBarPrincipal;
     private javax.swing.JMenu MenuCadastro;
     private javax.swing.JMenuItem MenuItemCliente;
+    private javax.swing.JMenuItem MenuItemFornecedor;
     private javax.swing.JMenu MenuPedido;
     private javax.swing.JMenu MenuSobre;
     // End of variables declaration//GEN-END:variables

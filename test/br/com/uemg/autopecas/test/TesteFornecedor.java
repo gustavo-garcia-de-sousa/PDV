@@ -41,7 +41,7 @@ public class TesteFornecedor {
 
             //fd.create(f);
             //Fornecedor f = new Fornecedor(2);
-            List<Object> list = fd.read();
+            List<Fornecedor> list = fd.read();
 
             list.stream().forEach(x -> System.out.println(x));
 

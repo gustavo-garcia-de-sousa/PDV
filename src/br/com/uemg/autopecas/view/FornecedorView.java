@@ -4,9 +4,9 @@
  */
 package br.com.uemg.autopecas.view;
 
-import br.com.uemg.autopecas.DAO.ClienteDAO;
+import br.com.uemg.autopecas.DAO.FornecedorDAO;
 import br.com.uemg.autopecas.controller.ConnectionFactory;
-import br.com.uemg.autopecas.model.Cliente;
+import br.com.uemg.autopecas.model.Fornecedor;
 import br.com.uemg.autopecas.model.Pessoa;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  *
  * @author gustavo
  */
-public class ClienteView extends javax.swing.JInternalFrame {
+public class FornecedorView extends javax.swing.JInternalFrame {
 
     public int transacao;
 
     /**
-     * Creates new form Cliente
+     * Creates new form Fornecedor
      */
-    public ClienteView() {
+    public FornecedorView() {
         initComponents();
 
     }
@@ -76,7 +76,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoCancelar = new javax.swing.JButton();
         BotaoExcluir = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Cadastro de Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Cadastro de Fornecedores", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18))); // NOI18N
         setClosable(true);
         setForeground(java.awt.Color.white);
         setResizable(true);
@@ -496,9 +496,9 @@ public class ClienteView extends javax.swing.JInternalFrame {
     public void gravar() {
         try (Connection connection = new ConnectionFactory().getConnection()) {
 
-            ClienteDAO dao = new ClienteDAO(connection);
+            FornecedorDAO dao = new FornecedorDAO(connection);
             if (transacao == 0) {
-                dao.create(new Cliente(
+                dao.create(new Fornecedor(
                         0, new Pessoa(
                                 (String) ComboBoxTipo.getSelectedItem(),
                                 TextoFormatadoInscricao.getText(),
@@ -512,14 +512,17 @@ public class ClienteView extends javax.swing.JInternalFrame {
                                 TextoFormatadoCEP.getText()
                         ),
                         TextoContato.getText(),
-                        TextoEmail.getText()
+                        TextoEmail.getText(),
+                        "NAO IMPLEMENTADO"
                 ));
+
+                               
                 JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
                 TextoCodigo.setText("");
                 campos(false);
             }
             if (transacao == 1) {
-                dao.update(new Cliente(
+                dao.update(new Fornecedor(
                         Integer.valueOf(TextoCodigo.getText()), new Pessoa(
                         (String) ComboBoxTipo.getSelectedItem(),
                         TextoFormatadoInscricao.getText(),
@@ -533,7 +536,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         TextoFormatadoCEP.getText()
                 ),
                         TextoContato.getText(),
-                        TextoEmail.getText()
+                        TextoEmail.getText(),
+                        null
                 ));
                 JOptionPane.showMessageDialog(null, "Gravado no banco de dados!");
                 campos(false);
@@ -563,20 +567,20 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
             if (busca != 0) {
 
-                ClienteDAO dao = new ClienteDAO(connection);
+                FornecedorDAO dao = new FornecedorDAO(connection);
 
-                List<Cliente> c = dao.read(busca);
-                System.out.println("objeto:" + c);
+                List<Fornecedor> f = dao.read(busca);
+                System.out.println("objeto:" + f);
                 TextoCodigo.setEnabled(false);
                 BotaoEditar.setEnabled(true);
-                preencher(c);
+                preencher(f);
                 campos(false);
             } else {
                 TextoCodigo.setEnabled(false);
-                ConsultaClienteView cliente = new ConsultaClienteView();
-                PrincipalView.DesktopPanePrincipal.add(cliente);
-                cliente.setVisible(true);
-                PrincipalView.DesktopPanePrincipal.setComponentZOrder(cliente, 0);
+                ConsultaFornecedorView fornecedor = new ConsultaFornecedorView();
+                PrincipalView.DesktopPanePrincipal.add(fornecedor);
+                fornecedor.setVisible(true);
+                PrincipalView.DesktopPanePrincipal.setComponentZOrder(fornecedor, 0);
 
             }
 
@@ -587,7 +591,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
-    
+
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void BotaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoActionPerformed
@@ -630,14 +634,14 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
             if (JOptionPane.showConfirmDialog(null, "Deseja excluir o registro?", "Confirmação de exclusão!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 
-                ClienteDAO dao = new ClienteDAO(connection);
-                Cliente c = new Cliente();
+                FornecedorDAO dao = new FornecedorDAO(connection);
+                Fornecedor f = new Fornecedor();
 
                 Integer id = Integer.valueOf(
                         TextoCodigo.getText());
 
-                c.setId(id);
-                dao.delete(c);
+                f.setId(id);
+                dao.delete(f);
                 limpar();
             }
 
@@ -649,31 +653,31 @@ public class ClienteView extends javax.swing.JInternalFrame {
         }
     }
 
-    public void capturar(Cliente cliente) {
+    public void capturar(Fornecedor f) {
 
-        System.out.println("método capturar(): " + cliente.getId());
+        System.out.println("método capturar(): " + f.getId());
 
-        TextoCodigo.setText(String.valueOf(cliente.getId()));
+        TextoCodigo.setText(String.valueOf(f.getId()));
         TextoCodigo.requestFocus();
 
     }
 
-    public void preencher(List<Cliente> cliente) {
+    public void preencher(List<Fornecedor> f) {
 
-        TextoCodigo.setText(String.valueOf(cliente.get(0).getId()));
-        TextoNome.setText(cliente.get(0).getPessoa().getNome());
-        //TextoFormatadoCadastro.setText(cliente.getCadastro());
-        TextoApelido.setText(cliente.get(0).getPessoa().getApelido());
-        ComboBoxTipo.setSelectedItem(cliente.get(0).getPessoa().getTipo());
-        TextoFormatadoInscricao.setText(cliente.get(0).getPessoa().getInscricao());
-        TextoFormatadoNascimento.setText(cliente.get(0).getPessoa().getNascimento());
-        TextoContato.setText(cliente.get(0).getContato());
-        TextoEmail.setText(cliente.get(0).getEmail());
-        TextoLogradouro.setText(cliente.get(0).getPessoa().getLogradouro());
-        TextoBairro.setText(cliente.get(0).getPessoa().getBairro());
-        TextoFormatadoCEP.setText(cliente.get(0).getPessoa().getCEP());
-        TextoCidade.setText(cliente.get(0).getPessoa().getCidade());
-        ComboBoxUF.setSelectedItem(cliente.get(0).getPessoa().getUf());
+        TextoCodigo.setText(String.valueOf(f.get(0).getId()));
+        TextoNome.setText(f.get(0).getPessoa().getNome());
+        //TextoFormatadoCadastro.setText(f.getCadastro());
+        TextoApelido.setText(f.get(0).getPessoa().getApelido());
+        ComboBoxTipo.setSelectedItem(f.get(0).getPessoa().getTipo());
+        TextoFormatadoInscricao.setText(f.get(0).getPessoa().getInscricao());
+        TextoFormatadoNascimento.setText(f.get(0).getPessoa().getNascimento());
+        TextoContato.setText(f.get(0).getContato());
+        TextoEmail.setText(f.get(0).getEmail());
+        TextoLogradouro.setText(f.get(0).getPessoa().getLogradouro());
+        TextoBairro.setText(f.get(0).getPessoa().getBairro());
+        TextoFormatadoCEP.setText(f.get(0).getPessoa().getCEP());
+        TextoCidade.setText(f.get(0).getPessoa().getCidade());
+        ComboBoxUF.setSelectedItem(f.get(0).getPessoa().getUf());
     }
 
     public void limpar() {

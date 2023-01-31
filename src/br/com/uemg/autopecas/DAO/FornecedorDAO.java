@@ -1,7 +1,6 @@
 package br.com.uemg.autopecas.DAO;
 
 import br.com.uemg.autopecas.model.Fornecedor;
-import br.com.uemg.autopecas.model.Fornecedor;
 import br.com.uemg.autopecas.model.Pessoa;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +14,7 @@ import java.util.List;
  *
  * @author gustavo
  */
-public class FornecedorDAO implements CRUD {
+public class FornecedorDAO {
 
     private final Connection connection;
 
@@ -24,11 +23,12 @@ public class FornecedorDAO implements CRUD {
         this.connection = connection;
     }
 
-    @Override
-    public void create(Object object) throws SQLException {
-        Fornecedor f = (Fornecedor) object;//casting
+    public void create(Fornecedor f) throws SQLException {
+
         String SQL = "INSERT INTO Fornecedor (tipo, inscricao, nome, apelido, nascimento, logradouro, bairro, cidade, uf, cep, contato, email, responsavel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        System.out.println(f);
+        
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             connection.setAutoCommit(false);//desligando transação automática
@@ -64,9 +64,8 @@ public class FornecedorDAO implements CRUD {
         }
     }
 
-    @Override
-    public List<Object> read() throws SQLException {
-        List<Object> list = new ArrayList<>();
+    public List<Fornecedor> read() throws SQLException {
+        List<Fornecedor> list = new ArrayList<>();
         String SQL = "SELECT * FROM Fornecedor";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
@@ -91,17 +90,116 @@ public class FornecedorDAO implements CRUD {
                                 result.getString("uf"),
                                 result.getString("cep")
                         ));
+                f.setContato(result.getString("contato"));
+                f.setEmail(result.getString("email"));
+                f.setCadastro(result.getString("cadastro"));
 
                 list.add(f);
 
             }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
         }
         return list;
     }
 
-    @Override
-    public void update(Object object) throws SQLException {
-        Fornecedor f = (Fornecedor) object;//casting
+    public List<Fornecedor> read(Integer busca) throws SQLException {
+
+        List<Fornecedor> list = new ArrayList();
+
+        String SQL = "SELECT * FROM Fornecedor WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            statement.setInt(1, busca);
+            statement.execute();
+
+            ResultSet result = statement.getResultSet();
+
+            while (result.next()) {
+                Fornecedor f = new Fornecedor();
+
+                f.setId(result.getInt("id"));
+                f.setPessoa(
+                        new Pessoa(
+                                result.getString("tipo"),
+                                result.getString("inscricao"),
+                                result.getString("apelido"),
+                                result.getString("nome"),
+                                result.getString("nascimento"),
+                                result.getString("logradouro"),
+                                result.getString("bairro"),
+                                result.getString("cidade"),
+                                result.getString("uf"),
+                                result.getString("cep")
+                        ));
+                f.setContato(result.getString("contato"));
+                f.setEmail(result.getString("email"));
+                f.setCadastro(result.getString("cadastro"));
+                f.setResponsavel(result.getString("responsavel"));
+
+                list.add(f);
+
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+        }
+        return list;
+    }
+
+    public List<Fornecedor> read(String busca) throws SQLException {
+
+        List<Fornecedor> list = new ArrayList();
+
+        String SQL = "SELECT * FROM Fornecedor WHERE nome LIKE ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            statement.setString(1, "%" + busca + "%");
+            statement.execute();
+
+            ResultSet result = statement.getResultSet();
+
+            while (result.next()) {
+                Fornecedor f = new Fornecedor();
+
+                f.setId(result.getInt("id"));
+                f.setPessoa(
+                        new Pessoa(
+                                result.getString("tipo"),
+                                result.getString("inscricao"),
+                                result.getString("apelido"),
+                                result.getString("nome"),
+                                result.getString("nascimento"),
+                                result.getString("logradouro"),
+                                result.getString("bairro"),
+                                result.getString("cidade"),
+                                result.getString("uf"),
+                                result.getString("cep")
+                        ));
+                f.setContato(result.getString("contato"));
+                f.setEmail(result.getString("email"));
+                f.setCadastro(result.getString("cadastro"));
+                f.setResponsavel(result.getString("responsavel"));
+
+                list.add(f);
+
+            }
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+        }
+
+        return list;
+    }
+
+    public void update(Fornecedor f) throws SQLException {
+
         String SQL = "UPDATE Fornecedor SET tipo = ?, inscricao = ?, nome = ?, apelido = ?, nascimento = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?, cep = ?, contato = ?, email =?, responsavel = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -140,9 +238,7 @@ public class FornecedorDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object object) throws SQLException {
-        Fornecedor f = (Fornecedor) object;
+    public void delete(Fornecedor f) throws SQLException {
 
         String SQL = "DELETE FROM Fornecedor WHERE id = ?";
 

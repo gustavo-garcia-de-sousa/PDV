@@ -1,8 +1,10 @@
 package br.com.uemg.autopecas.view;
 
 import br.com.uemg.autopecas.DAO.ClienteDAO;
+import br.com.uemg.autopecas.DAO.FornecedorDAO;
 import br.com.uemg.autopecas.controller.ConnectionFactory;
 import br.com.uemg.autopecas.model.Cliente;
+import br.com.uemg.autopecas.model.Fornecedor;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,22 +16,22 @@ import javax.swing.table.TableRowSorter;
  *
  * @author gustavo
  */
-public final class ConsultaClienteView extends javax.swing.JInternalFrame {
+public final class ConsultaFornecedorView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaClienteView
      */
-    ClienteView ccview = new ClienteView();
+    FornecedorView ccview = new FornecedorView();
 
-    public ConsultaClienteView() {
+    public ConsultaFornecedorView() {
         initComponents();
-        DefaultTableModel cliente = (DefaultTableModel) TabelaClientes.getModel();
-        TabelaClientes.setRowSorter(new TableRowSorter(cliente));
+        DefaultTableModel fornecedor = (DefaultTableModel) TabelaFornecedores.getModel();
+        TabelaFornecedores.setRowSorter(new TableRowSorter(fornecedor));
 
-        TabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(40);
-        TabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(250);
-        TabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(130);
-        TabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);
+        TabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(40);
+        TabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(250);
+        TabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(130);
+        TabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(110);
         read();
 
     }
@@ -48,9 +50,9 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
         LabelArgumento = new javax.swing.JLabel();
         BotaoConsultar = new javax.swing.JButton();
         ScrollPainel = new javax.swing.JScrollPane();
-        TabelaClientes = new javax.swing.JTable();
+        TabelaFornecedores = new javax.swing.JTable();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "Consulta de Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "Consulta de Fornecedores", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18)), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Liberation Sans", 1, 18))); // NOI18N
         setClosable(true);
         setForeground(java.awt.Color.white);
         setName(""); // NOI18N
@@ -88,8 +90,8 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
             }
         });
 
-        TabelaClientes.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
-        TabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaFornecedores.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+        TabelaFornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -108,12 +110,12 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        TabelaFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TabelaClientesMouseClicked(evt);
+                TabelaFornecedoresMouseClicked(evt);
             }
         });
-        ScrollPainel.setViewportView(TabelaClientes);
+        ScrollPainel.setViewportView(TabelaFornecedores);
 
         javax.swing.GroupLayout PainelConsultaClientesLayout = new javax.swing.GroupLayout(PainelConsultaClientes);
         PainelConsultaClientes.setLayout(PainelConsultaClientesLayout);
@@ -163,58 +165,58 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
 
     public void read() {
         try (Connection connection = new ConnectionFactory().getConnection()) {
-            DefaultTableModel ListaCliente = (DefaultTableModel) TabelaClientes.getModel();
-            ListaCliente.setNumRows(0);
+            DefaultTableModel ListaFornecedor = (DefaultTableModel) TabelaFornecedores.getModel();
+            ListaFornecedor.setNumRows(0);
 
-            ClienteDAO cd = new ClienteDAO(connection);
+            FornecedorDAO dao = new FornecedorDAO(connection);
 
-            for (Cliente c : cd.read()) {
+            for (Fornecedor f : dao.read()) {
 
-                ListaCliente.addRow(new Object[]{
-                    c.getId(),
-                    c.getPessoa().getNome(),
-                    c.getPessoa().getInscricao(),
-                    c.getContato()});
+                ListaFornecedor.addRow(new Object[]{
+                    f.getId(),
+                    f.getPessoa().getNome(),
+                    f.getPessoa().getInscricao(),
+                    f.getContato()});
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultaClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultaFornecedorView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void read(String busca) {
         try (Connection connection = new ConnectionFactory().getConnection()) {
-            DefaultTableModel ListaCliente = (DefaultTableModel) TabelaClientes.getModel();
-            ListaCliente.setNumRows(0);
+            DefaultTableModel ListaFornecedor = (DefaultTableModel) TabelaFornecedores.getModel();
+            ListaFornecedor.setNumRows(0);
 
-            ClienteDAO cd = new ClienteDAO(connection);
+            FornecedorDAO dao = new FornecedorDAO(connection);
 
-            for (Cliente c : cd.read(busca)) {
+            for (Fornecedor f : dao.read(busca)) {
                 //**/
 
-                ListaCliente.addRow(new Object[]{
-                    c.getId(),
-                    c.getPessoa().getNome(),
-                    c.getPessoa().getInscricao(),
-                    c.getContato()});
+                ListaFornecedor.addRow(new Object[]{
+                    f.getId(),
+                    f.getPessoa().getNome(),
+                    f.getPessoa().getInscricao(),
+                    f.getContato()});
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultaClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultaFornecedorView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
 
-        if (TabelaClientes.getSelectedRow() != 0) {
+        if (TabelaFornecedores.getSelectedRow() != 0) {
 
-            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 1).toString();
-            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 2).toString();
-            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 3).toString();
-            TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 4).toString();
+            TabelaFornecedores.getValueAt(TabelaFornecedores.getSelectedRow(), 1).toString();
+            TabelaFornecedores.getValueAt(TabelaFornecedores.getSelectedRow(), 2).toString();
+            TabelaFornecedores.getValueAt(TabelaFornecedores.getSelectedRow(), 3).toString();
+            TabelaFornecedores.getValueAt(TabelaFornecedores.getSelectedRow(), 4).toString();
 
         }
     }//GEN-LAST:event_formInternalFrameOpened
@@ -224,16 +226,16 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
         read(TextoArgumento.getText());
     }//GEN-LAST:event_BotaoConsultarActionPerformed
 
-    private void TabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClientesMouseClicked
-        Cliente c = new Cliente();
+    private void TabelaFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaFornecedoresMouseClicked
+        Fornecedor f = new Fornecedor();
 
-        c.setId(Integer.valueOf(TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 0).toString()));
+        f.setId(Integer.valueOf(TabelaFornecedores.getValueAt(TabelaFornecedores.getSelectedRow(), 0).toString()));
 
-        ccview.capturar(c);
+        ccview.capturar(f);
         dispose();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_TabelaClientesMouseClicked
+    }//GEN-LAST:event_TabelaFornecedoresMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -241,7 +243,7 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel LabelArgumento;
     private javax.swing.JPanel PainelConsultaClientes;
     private javax.swing.JScrollPane ScrollPainel;
-    private javax.swing.JTable TabelaClientes;
+    private javax.swing.JTable TabelaFornecedores;
     private javax.swing.JTextField TextoArgumento;
     // End of variables declaration//GEN-END:variables
 }

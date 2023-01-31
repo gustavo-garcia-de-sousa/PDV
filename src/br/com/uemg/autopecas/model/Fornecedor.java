@@ -22,7 +22,7 @@ public class Fornecedor {
 
     public Fornecedor(Integer id, Pessoa pessoa, String contato, String email, String responsavel) {
         this.id = id;
-        this.pessoa = new Pessoa();
+        this.pessoa = pessoa;
         this.contato = contato;
         this.email = email;
         this.responsavel = responsavel;
@@ -72,9 +72,18 @@ public class Fornecedor {
         return cadastro;
     }
 
+    public void setCadastro(String cadastro) {
+        this.cadastro = cadastro;
+    }
+
     @Override
     public String toString() {
-        return "|id:" + this.id + " |tipo: " + this.pessoa.getTipo() + " |inscrição: " + this.pessoa.getInscricao() + " |apelido: " + this.pessoa.getApelido() + "|";
+        return "id:" + this.id
+                + "\ntipo: " + this.pessoa.getTipo()
+                + "\ninscrição: " + this.pessoa.getInscricao()
+                + "\napelido: " + this.pessoa.getApelido()
+                + "\ncontato: " + this.getContato()
+                + "\nemail: " + this.getEmail();
     }
 
 }
