@@ -22,7 +22,7 @@ public class FornecedorView extends javax.swing.JInternalFrame {
     public int transacao;
 
     /**
-     * Creates new form Fornecedor
+     * Creates new form produto
      */
     public FornecedorView() {
         initComponents();

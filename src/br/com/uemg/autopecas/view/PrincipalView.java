@@ -31,6 +31,8 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuCadastro = new javax.swing.JMenu();
         MenuItemCliente = new javax.swing.JMenuItem();
         MenuItemFornecedor = new javax.swing.JMenuItem();
+        MenuItemCategoria = new javax.swing.JMenuItem();
+        MenuItemProduto = new javax.swing.JMenuItem();
         MenuPedido = new javax.swing.JMenu();
         MenuSobre = new javax.swing.JMenu();
 
@@ -97,6 +99,26 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuCadastro.add(MenuItemFornecedor);
 
+        MenuItemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        MenuItemCategoria.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        MenuItemCategoria.setText("CATEGORIA");
+        MenuItemCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemCategoriaActionPerformed(evt);
+            }
+        });
+        MenuCadastro.add(MenuItemCategoria);
+
+        MenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        MenuItemProduto.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        MenuItemProduto.setText("PRODUTO");
+        MenuItemProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemProdutoActionPerformed(evt);
+            }
+        });
+        MenuCadastro.add(MenuItemProduto);
+
         MenuBarPrincipal.add(MenuCadastro);
 
         MenuPedido.setText("PEDIDO");
@@ -155,6 +177,20 @@ public class PrincipalView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_MenuItemFornecedorActionPerformed
 
+    private void MenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCategoriaActionPerformed
+        // TODO add your handling code here:
+        CategoriaView categoria = new CategoriaView();
+        DesktopPanePrincipal.add(categoria);
+        categoria.setVisible(true);
+    }//GEN-LAST:event_MenuItemCategoriaActionPerformed
+
+    private void MenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemProdutoActionPerformed
+        // TODO add your handling code here:
+        ProdutoView produto = new ProdutoView();
+        DesktopPanePrincipal.add(produto);
+        produto.setVisible(true);
+    }//GEN-LAST:event_MenuItemProdutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,8 +229,10 @@ public class PrincipalView extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane DesktopPanePrincipal;
     private javax.swing.JMenuBar MenuBarPrincipal;
     private javax.swing.JMenu MenuCadastro;
+    private javax.swing.JMenuItem MenuItemCategoria;
     private javax.swing.JMenuItem MenuItemCliente;
     private javax.swing.JMenuItem MenuItemFornecedor;
+    private javax.swing.JMenuItem MenuItemProduto;
     private javax.swing.JMenu MenuPedido;
     private javax.swing.JMenu MenuSobre;
     // End of variables declaration//GEN-END:variables
