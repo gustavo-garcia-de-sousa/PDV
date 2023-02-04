@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.uemg.autopecas.DAO;
 
 import br.com.uemg.autopecas.model.Categoria;
@@ -15,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,8 +29,6 @@ public class ProdutoDAO {
     public void create(Produto p) throws SQLException {
 
         String SQL = "INSERT INTO Produto (categoria, fornecedor, descricao, custo, venda, estoque, quantidade, unidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        System.out.println("método create()" + p.getFornecedor());
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -62,6 +57,7 @@ public class ProdutoDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 
@@ -72,6 +68,8 @@ public class ProdutoDAO {
                 + "INNER JOIN Fornecedor ON Produto.fornecedor = Fornecedor.id";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+            connection.setAutoCommit(false);//desligando transação automática
+
             statement.execute();
 
             ResultSet result = statement.getResultSet();
@@ -81,7 +79,6 @@ public class ProdutoDAO {
                 Produto p = new Produto();
 
                 p.setId(result.getInt("Produto.id"));
-                System.out.println("id: " + p.getId());
 
                 Categoria categoria = new Categoria();
                 categoria.setId(result.getInt("Produto.categoria"));
@@ -91,7 +88,7 @@ public class ProdutoDAO {
                 Fornecedor fornecedor = new Fornecedor();
                 fornecedor.setId(result.getInt("Produto.fornecedor"));
                 Pessoa pessoa = new Pessoa();
-                pessoa.setApelido("Fornecedor.apelido");
+                pessoa.setApelido(result.getString("Fornecedor.apelido"));
                 fornecedor.setPessoa(pessoa);
                 p.setFornecedor(fornecedor);
 
@@ -102,15 +99,15 @@ public class ProdutoDAO {
                 p.setQuantidade(result.getInt("Produto.quantidade"));
                 p.setUnidade(result.getString("Produto.unidade"));
 
-                System.out.println("Class: ProdutoDAO, método read();, Objeto:" + p);
-
                 list.add(p);
 
+                connection.commit();//enviando transação
             }
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
         return list;
     }
@@ -124,7 +121,7 @@ public class ProdutoDAO {
                 + "INNER JOIN Fornecedor ON Produto.fornecedor = Fornecedor.id WHERE Produto.id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
-            
+            connection.setAutoCommit(false);//desligando transação automática
             statement.setInt(1, busca);
             statement.execute();
 
@@ -135,7 +132,6 @@ public class ProdutoDAO {
                 Produto p = new Produto();
 
                 p.setId(result.getInt("Produto.id"));
-                System.out.println("id: " + p.getId());
 
                 Categoria categoria = new Categoria();
                 categoria.setId(result.getInt("Produto.categoria"));
@@ -145,7 +141,7 @@ public class ProdutoDAO {
                 Fornecedor fornecedor = new Fornecedor();
                 fornecedor.setId(result.getInt("Produto.fornecedor"));
                 Pessoa pessoa = new Pessoa();
-                pessoa.setApelido("Fornecedor.apelido");
+                pessoa.setApelido(result.getString("Fornecedor.apelido"));
                 fornecedor.setPessoa(pessoa);
                 p.setFornecedor(fornecedor);
 
@@ -155,15 +151,19 @@ public class ProdutoDAO {
                 p.setEstoque(result.getInt("Produto.estoque"));
                 p.setQuantidade(result.getInt("Produto.quantidade"));
                 p.setUnidade(result.getString("Produto.unidade"));
-                System.out.println("Class: ProdutoDAO, método read(Integer busca);, Objeto:" + p);
 
                 list.add(p);
+
+                System.out.println(list.get(0));
+
+                connection.commit();//enviando transação
 
             }
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
         return list;
     }
@@ -172,10 +172,10 @@ public class ProdutoDAO {
 
         List<Produto> list = new ArrayList();
 
-        String SQL = "SELECT * FROM Produto WHERE nome LIKE ?";
+        String SQL = "SELECT * FROM Produto WHERE descricao LIKE ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
-
+            connection.setAutoCommit(false);//desligando transação automática
             statement.setString(1, "%" + busca + "%");
             statement.execute();
 
@@ -185,8 +185,15 @@ public class ProdutoDAO {
                 Produto p = new Produto();
 
                 p.setId(result.getInt("id"));
-                p.setCategoria(new Categoria(result.getInt("categoria")));
-                p.setFornecedor(new Fornecedor(result.getInt("fornecedor")));
+
+                Categoria categoria = new Categoria();
+                categoria.setId(result.getInt("categoria"));
+                p.setCategoria(categoria);
+
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(result.getInt("fornecedor"));
+                p.setFornecedor(fornecedor);
+
                 p.setDescricao(result.getString("descricao"));
                 p.setCusto(result.getDouble("custo"));
                 p.setVenda(result.getDouble("venda"));
@@ -195,11 +202,14 @@ public class ProdutoDAO {
                 p.setUnidade(result.getString("unidade"));
 
                 list.add(p);
+
+                connection.commit();//enviando transação
             }
         } catch (SQLException e) {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
 
         return list;
@@ -211,7 +221,7 @@ public class ProdutoDAO {
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-            connection.setAutoCommit(false);//desligando transação automática
+            System.out.println(p);
 
             statement.setInt(1, p.getCategoria().getId());
             statement.setInt(2, p.getFornecedor().getId());
@@ -225,8 +235,7 @@ public class ProdutoDAO {
 
             statement.execute();
 
-            connection.commit();//enviando transação
-
+           
             try (ResultSet result = statement.getGeneratedKeys()) {
 
                 while (result.next()) {
@@ -237,6 +246,7 @@ public class ProdutoDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 
@@ -260,6 +270,7 @@ public class ProdutoDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 }

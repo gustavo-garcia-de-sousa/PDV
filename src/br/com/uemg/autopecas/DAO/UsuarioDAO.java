@@ -1,6 +1,5 @@
 package br.com.uemg.autopecas.DAO;
 
-import br.com.uemg.autopecas.model.EnumUsuario;
 import br.com.uemg.autopecas.model.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -75,7 +74,7 @@ public class UsuarioDAO implements CRUD {
                 u.setId(result.getInt("id"));
                 u.setNome(result.getString("nome"));
                 u.setSenha(result.getString("senha"));
-                u.setCargo(EnumUsuario.valueOf(result.getString("cargo")));
+                u.setCargo(result.getString("cargo"));
                 list.add(u);
 
             }
@@ -95,7 +94,7 @@ public class UsuarioDAO implements CRUD {
 
             statement.setString(1, u.getNome());
             statement.setString(2, u.getSenha());
-            statement.setString(3, u.getCargo().name());
+            statement.setString(3, u.getCargo());
             statement.setInt(4, u.getId());
 
             statement.execute();
