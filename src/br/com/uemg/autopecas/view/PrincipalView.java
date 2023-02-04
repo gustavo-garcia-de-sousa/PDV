@@ -109,7 +109,7 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuCadastro.add(MenuItemCategoria);
 
-        MenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        MenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
         MenuItemProduto.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         MenuItemProduto.setText("PRODUTO");
         MenuItemProduto.addActionListener(new java.awt.event.ActionListener() {

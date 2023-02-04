@@ -73,7 +73,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="MenuItemProduto">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F3"/>
+                  <KeyStroke key="F4"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Liberation Sans" size="14" style="1"/>
