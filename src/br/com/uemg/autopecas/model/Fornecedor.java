@@ -78,12 +78,7 @@ public class Fornecedor {
 
     @Override
     public String toString() {
-        return "id:" + this.id
-                + "\ntipo: " + this.pessoa.getTipo()
-                + "\ninscrição: " + this.pessoa.getInscricao()
-                + "\napelido: " + this.pessoa.getApelido()
-                + "\ncontato: " + this.getContato()
-                + "\nemail: " + this.getEmail();
+        return this.id + " - " + this.pessoa.getApelido();
     }
 
 }
