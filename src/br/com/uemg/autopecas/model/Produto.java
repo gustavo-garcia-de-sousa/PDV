@@ -12,8 +12,8 @@ public class Produto {
     private Categoria categoria;
     private Fornecedor fornecedor;
     private String descricao;
-    private Float custo;
-    private Float venda;
+    private Double custo;
+    private Double venda;
     private Integer estoque;
     private Integer quantidade;
     private String unidade;
@@ -25,7 +25,7 @@ public class Produto {
     public Produto(Integer id) {
     }
 
-    public Produto(Integer id, Categoria categoria, Fornecedor fornecedor, String descricao, Float custo, Float venda, Integer estoque, Integer quantidade, String unidade) {
+    public Produto(Integer id, Categoria categoria, Fornecedor fornecedor, String descricao, Double custo, Double venda, Integer estoque, Integer quantidade, String unidade) {
         this.id = id;
         this.categoria = categoria;
         this.fornecedor = fornecedor;
@@ -69,19 +69,19 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Float getCusto() {
+    public Double getCusto() {
         return custo;
     }
 
-    public void setCusto(Float custo) {
+    public void setCusto(Double custo) {
         this.custo = custo;
     }
 
-    public Float getVenda() {
+    public Double getVenda() {
         return venda;
     }
 
-    public void setVenda(Float venda) {
+    public void setVenda(Double venda) {
         this.venda = venda;
     }
 
@@ -119,10 +119,12 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "id: " + this.id
-                + "\ndescricao: " + this.descricao
-                + "\ncategoria" + this.categoria.getDescricao()
-                + "\nfornecedor: " + this.fornecedor.getPessoa().getApelido();
+        return "PRODUTO"
+                + "\nID: " + this.id
+                + "\nCATEGORIA: " + this.categoria
+                + "\nFORNECEDOR: " + this.fornecedor
+                + "\nDESCRICAO: " + this.descricao
+                + "\nTIPO UNIDADE: " + this.unidade;
     }
 
 }

@@ -9,7 +9,7 @@ public class Usuario {
     private Integer id;
     private String nome;
     private String senha;
-    public EnumUsuario cargo;
+    private String cargo;
 
     public Integer getId() {
         return id;
@@ -35,11 +35,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public EnumUsuario getCargo() {
+    public String getCargo() {
         return cargo;
     }
 
-    public void setCargo(EnumUsuario cargo) {
+    public void setCargo(String cargo) {
         this.cargo = cargo;
     }
 

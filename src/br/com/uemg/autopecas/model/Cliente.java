@@ -68,12 +68,12 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "id:" + this.id
-                + "\ntipo: " + this.pessoa.getTipo()
-                + "\ninscrição: " + this.pessoa.getInscricao()
-                + "\napelido: " + this.pessoa.getApelido()
-                + "\ncontato: " + this.getContato()
-                + "\nemail: " + this.getEmail();
+        return "ID:" + this.id
+                + "\nTIPO: " + this.pessoa.getTipo()
+                + "\nINSCRIÇÃO: " + this.pessoa.getInscricao()
+                + "\nAPELIDO: " + this.pessoa.getApelido()
+                + "\nCONTATO: " + this.getContato()
+                + "\nE-MAIL: " + this.getEmail();
     }
 
 }

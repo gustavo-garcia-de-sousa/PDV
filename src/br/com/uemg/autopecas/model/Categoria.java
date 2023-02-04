@@ -35,8 +35,7 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "id:" + this.id
-                + "\ndescricao: " + this.descricao;
+        return this.id + " - " + this.descricao;
 
     }
 
