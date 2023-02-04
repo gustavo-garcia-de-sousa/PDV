@@ -134,7 +134,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TextoDescricao">
       <Properties>
-        <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Liberation Sans" size="18" style="0"/>
         </Property>
@@ -256,18 +255,22 @@
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="LabelPrecoVenda" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="LabelPrecoCusto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="LabelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="LabelEstoque" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="LabelPrecoCusto" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="LabelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="LabelEstoque" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="TextoFormatadoPrecoVenda" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                                  <Component id="TextoFormatadoEstoque" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                                  <Component id="TextoFormatadoQuantidade" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="TextoFormatadoPrecoCusto" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="TextoFormatadoPrecoVenda" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="TextoFormatadoEstoque" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="TextoFormatadoQuantidade" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -334,7 +337,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JComboBox" name="ComboBoxCategoria">
@@ -345,7 +348,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="TextoFormatadoPrecoVenda">
@@ -393,33 +396,10 @@
                   <Font name="Liberation Sans" size="18" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="26">
-                    <StringItem index="0" value="AC"/>
-                    <StringItem index="1" value="AL"/>
-                    <StringItem index="2" value="AM"/>
-                    <StringItem index="3" value="BA"/>
-                    <StringItem index="4" value="CE"/>
-                    <StringItem index="5" value="DF"/>
-                    <StringItem index="6" value="ES"/>
-                    <StringItem index="7" value="GO"/>
-                    <StringItem index="8" value="MA"/>
-                    <StringItem index="9" value="MT"/>
-                    <StringItem index="10" value="MS"/>
-                    <StringItem index="11" value="MG"/>
-                    <StringItem index="12" value="PA"/>
-                    <StringItem index="13" value="PB"/>
-                    <StringItem index="14" value="PR"/>
-                    <StringItem index="15" value="PE"/>
-                    <StringItem index="16" value="PI"/>
-                    <StringItem index="17" value="RJ"/>
-                    <StringItem index="18" value="RN"/>
-                    <StringItem index="19" value="RS"/>
-                    <StringItem index="20" value="RO"/>
-                    <StringItem index="21" value="RR"/>
-                    <StringItem index="22" value="SC"/>
-                    <StringItem index="23" value="SP"/>
-                    <StringItem index="24" value="SE"/>
-                    <StringItem index="25" value="TO"/>
+                  <StringArray count="3">
+                    <StringItem index="0" value="UNIDADE"/>
+                    <StringItem index="1" value="CAIXA"/>
+                    <StringItem index="2" value="CONJUNTO"/>
                   </StringArray>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>

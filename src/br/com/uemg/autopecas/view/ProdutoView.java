@@ -102,7 +102,6 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         LabelDescricao.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         LabelDescricao.setText("Descrição");
 
-        TextoDescricao.setEditable(false);
         TextoDescricao.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
         Painel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -152,7 +151,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         LabelTipoUnidade.setText("Tipo de Unidade:");
 
         ComboBoxTipoUnidade.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        ComboBoxTipoUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        ComboBoxTipoUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UNIDADE", "CAIXA", "CONJUNTO" }));
         ComboBoxTipoUnidade.setEnabled(false);
 
         BotaoAdicionarCategoria.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -241,17 +240,19 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 .addGap(6, 6, 6)
                 .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PainelInformacoesPessoaisLayout.createSequentialGroup()
-                        .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelPrecoVenda)
-                            .addComponent(LabelPrecoCusto)
-                            .addComponent(LabelQuantidade)
-                            .addComponent(LabelEstoque))
+                            .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelPrecoCusto)
+                                .addComponent(LabelQuantidade)
+                                .addComponent(LabelEstoque)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TextoFormatadoPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextoFormatadoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextoFormatadoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextoFormatadoPrecoCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextoFormatadoPrecoCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PainelInformacoesPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(TextoFormatadoPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TextoFormatadoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TextoFormatadoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(PainelInformacoesPessoaisLayout.createSequentialGroup()
                         .addComponent(LabelTipoUnidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -408,7 +409,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             categoria = dao.read();
 
             for (Categoria c : categoria) {
-                ComboBoxCategoria.addItem(c.getDescricao());
+                ComboBoxCategoria.addItem(c.getId());
+
             }
         } catch (SQLException ex) {
         }
@@ -422,7 +424,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             fornecedor = dao.read();
 
             for (Fornecedor f : fornecedor) {
-                ComboBoxFornecedor.addItem(f.getPessoa().getApelido());
+
+                ComboBoxFornecedor.addItem(f.getId());
             }
         } catch (SQLException ex) {
         }
@@ -441,13 +444,16 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
             ProdutoDAO dao = new ProdutoDAO(connection);
             if (transacao == 0) {
+                System.out.println(ComboBoxCategoria.getSelectedIndex());
+                System.out.println(ComboBoxFornecedor.getSelectedIndex());
+
                 dao.create(new Produto(
                         0,
-                        new Categoria(ComboBoxCategoria.getSelectedIndex()),
-                        new Fornecedor(ComboBoxFornecedor.getSelectedIndex()),
+                        ComboBoxCategoria.getSelectedIndex(),
+                        ComboBoxFornecedor.getSelectedIndex(),
                         TextoDescricao.getText(),
-                        Float.valueOf(TextoFormatadoPrecoCusto.getText()),
-                        Float.valueOf(TextoFormatadoPrecoVenda.getText()),
+                        Double.valueOf(TextoFormatadoPrecoCusto.getText()),
+                        Double.valueOf(TextoFormatadoPrecoVenda.getText()),
                         Integer.valueOf(TextoFormatadoEstoque.getText()),
                         Integer.valueOf(TextoFormatadoQuantidade.getText()),
                         String.valueOf(ComboBoxTipoUnidade.getSelectedIndex())
@@ -460,11 +466,11 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             if (transacao == 1) {
                 dao.update(new Produto(
                         0,
-                        new Categoria(ComboBoxCategoria.getSelectedIndex()),
-                        new Fornecedor(ComboBoxFornecedor.getSelectedIndex()),
+                        ComboBoxCategoria.getSelectedIndex(),
+                        ComboBoxFornecedor.getSelectedIndex(),
                         TextoDescricao.getText(),
-                        Float.valueOf(TextoFormatadoPrecoCusto.getText()),
-                        Float.valueOf(TextoFormatadoPrecoVenda.getText()),
+                        Double.valueOf(TextoFormatadoPrecoCusto.getText()),
+                        Double.valueOf(TextoFormatadoPrecoVenda.getText()),
                         Integer.valueOf(TextoFormatadoEstoque.getText()),
                         Integer.valueOf(TextoFormatadoQuantidade.getText()),
                         String.valueOf(ComboBoxTipoUnidade.getSelectedIndex())
@@ -502,7 +508,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
                 List<Produto> c = dao.read(busca);
                 System.out.println("objeto:" + c);
-                TextoCodigo.setEnabled(false);
+                TextoCodigo.setEditable(false);
                 BotaoEditar.setEnabled(true);
                 preencher(c);
                 campos(false);
@@ -531,7 +537,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         limpar();
         campos(true);
 
-        TextoCodigo.setEnabled(false);
+        TextoCodigo.setEditable(false);
         BotaoNovo.setEnabled(false);
         BotaoGravar.setEnabled(true);
         BotaoCancelar.setEnabled(true);
@@ -542,7 +548,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         transacao = 1;
         campos(true);
 
-        TextoCodigo.setEnabled(false);
+        TextoCodigo.setEditable(false);
         BotaoEditar.setEnabled(false);
         BotaoNovo.setEnabled(false);
     }//GEN-LAST:event_BotaoEditarActionPerformed
@@ -550,8 +556,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     private void BotaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarActionPerformed
         // TODO add your handling code here:
         campos(false);
-        
-        TextoCodigo.setEnabled(true);
+
+        TextoCodigo.setEditable(true);
         BotaoNovo.setEnabled(true);
         BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoCancelarActionPerformed
@@ -566,8 +572,11 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_PainelVetoableChange
 
     private void BotaoAdicionarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarCategoriaActionPerformed
-        CategoriaView categorias = new CategoriaView();
-        categorias.setVisible(true);
+
+        CategoriaView ategoria = new CategoriaView();
+        PrincipalView.DesktopPanePrincipal.add(ategoria);
+        ategoria.setVisible(true);
+        PrincipalView.DesktopPanePrincipal.setComponentZOrder(ategoria, 0);
     }//GEN-LAST:event_BotaoAdicionarCategoriaActionPerformed
 
     private void TextoFormatadoPrecoCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextoFormatadoPrecoCustoActionPerformed
@@ -611,8 +620,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
         TextoCodigo.setText(String.valueOf(produto.get(0).getId()));
         TextoDescricao.setText(produto.get(0).getDescricao());
-        ComboBoxCategoria.setSelectedItem(produto.get(0).getCategoria().getId());
-        ComboBoxFornecedor.setSelectedItem(produto.get(0).getFornecedor().getId());
+        ComboBoxCategoria.setSelectedItem(produto.get(0).getCategoria());
+        ComboBoxFornecedor.setSelectedItem(produto.get(0).getFornecedor());
         TextoFormatadoPrecoCusto.setText(String.valueOf(produto.get(0).getCusto()));
         TextoFormatadoPrecoVenda.setText(String.valueOf(produto.get(0).getVenda()));
         TextoFormatadoEstoque.setText(String.valueOf(produto.get(0).getEstoque()));
@@ -636,13 +645,13 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
     public void campos(boolean status) {
 
-        TextoDescricao.setEnabled(status);
+        TextoDescricao.setEditable(status);
         ComboBoxCategoria.setEnabled(status);
         ComboBoxFornecedor.setEnabled(status);
-        TextoFormatadoPrecoCusto.setEnabled(status);
-        TextoFormatadoPrecoVenda.setEnabled(status);
-        TextoFormatadoEstoque.setEnabled(status);
-        TextoFormatadoQuantidade.setEnabled(status);
+        TextoFormatadoPrecoCusto.setEditable(status);
+        TextoFormatadoPrecoVenda.setEditable(status);
+        TextoFormatadoEstoque.setEditable(status);
+        TextoFormatadoQuantidade.setEditable(status);
         ComboBoxTipoUnidade.setEnabled(status);
     }
 
@@ -654,8 +663,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     private javax.swing.JButton BotaoExcluir;
     private javax.swing.JButton BotaoGravar;
     private javax.swing.JButton BotaoNovo;
-    private javax.swing.JComboBox<String> ComboBoxCategoria;
-    private javax.swing.JComboBox<String> ComboBoxFornecedor;
+    private javax.swing.JComboBox<Object> ComboBoxCategoria;
+    private javax.swing.JComboBox<Object> ComboBoxFornecedor;
     private javax.swing.JComboBox<String> ComboBoxTipoUnidade;
     private javax.swing.JLabel LabelApelido;
     private javax.swing.JLabel LabelCodigo;
