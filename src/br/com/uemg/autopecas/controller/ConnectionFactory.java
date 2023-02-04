@@ -18,6 +18,7 @@ public class ConnectionFactory {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
+    /*
     public ConnectionFactory() {
         ComboPooledDataSource cpds = new ComboPooledDataSource();
         cpds.setJdbcUrl(URL);
@@ -27,11 +28,11 @@ public class ConnectionFactory {
         //cpds.setMaxPoolSize(10);
         this.dataSource = cpds;
     }
-
+     */
     public final Connection getConnection() throws SQLException {
 
-        //return DriverManager.getConnection(URL, USER, PASSWORD);
-        return this.dataSource.getConnection();
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+        //return this.dataSource.getConnection();
     }
 
 }
