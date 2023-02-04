@@ -4,9 +4,9 @@
  */
 package br.com.uemg.autopecas.DAO;
 
-import br.com.uemg.autopecas.model.Fornecedor;
 import br.com.uemg.autopecas.model.Categoria;
 import br.com.uemg.autopecas.model.Fornecedor;
+import br.com.uemg.autopecas.model.Pessoa;
 import br.com.uemg.autopecas.model.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,17 +33,17 @@ public class ProdutoDAO {
 
         String SQL = "INSERT INTO Produto (categoria, fornecedor, descricao, custo, venda, estoque, quantidade, unidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        System.out.println(p);
+        System.out.println("método create()" + p.getFornecedor());
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             connection.setAutoCommit(false);//desligando transação automática
 
-            statement.setInt(1, p.getCategoria().getId());
-            statement.setInt(2, p.getFornecedor().getId());
+            statement.setObject(1, p.getCategoria().getId());
+            statement.setObject(2, p.getFornecedor().getId());
             statement.setString(3, p.getDescricao());
-            statement.setFloat(4, p.getCusto());
-            statement.setFloat(5, p.getVenda());
+            statement.setDouble(4, p.getCusto());
+            statement.setDouble(5, p.getVenda());
             statement.setInt(6, p.getEstoque());
             statement.setInt(7, p.getQuantidade());
             statement.setString(8, p.getUnidade());
@@ -67,7 +67,9 @@ public class ProdutoDAO {
 
     public List<Produto> read() throws SQLException {
         List<Produto> list = new ArrayList<>();
-        String SQL = "SELECT * FROM Produto";
+        String SQL = "SELECT Produto.id, Produto.categoria, Categoria.descricao, Produto.fornecedor, Fornecedor.apelido, Produto.descricao, Produto.custo, Produto.venda, Produto.estoque, Produto.quantidade, Produto.unidade, Produto.cadastro FROM Produto "
+                + "INNER JOIN Categoria ON Produto.categoria = Categoria.id "
+                + "INNER JOIN Fornecedor ON Produto.fornecedor = Fornecedor.id";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
             statement.execute();
@@ -75,23 +77,32 @@ public class ProdutoDAO {
             ResultSet result = statement.getResultSet();
 
             while (result.next()) {
+
                 Produto p = new Produto();
 
-                p.setId(result.getInt("id"));
-                p.setCategoria(
-                        new Categoria(
-                                result.getInt("categoria")
-                        ));
-                p.setFornecedor(
-                        new Fornecedor(
-                                result.getInt("fornecedor")
-                        ));
-                p.setDescricao(result.getString("descricao"));
-                p.setCusto(result.getFloat("custo"));
-                p.setVenda(result.getFloat("venda"));
-                p.setEstoque(result.getInt("estoque"));
-                p.setQuantidade(result.getInt("quantidade"));
-                p.setUnidade(result.getString("unidade"));
+                p.setId(result.getInt("Produto.id"));
+                System.out.println("id: " + p.getId());
+
+                Categoria categoria = new Categoria();
+                categoria.setId(result.getInt("Produto.categoria"));
+                categoria.setDescricao(result.getString("Categoria.descricao"));
+                p.setCategoria(categoria);
+
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(result.getInt("Produto.fornecedor"));
+                Pessoa pessoa = new Pessoa();
+                pessoa.setApelido("Fornecedor.apelido");
+                fornecedor.setPessoa(pessoa);
+                p.setFornecedor(fornecedor);
+
+                p.setDescricao(result.getString("Produto.descricao"));
+                p.setCusto(result.getDouble("Produto.custo"));
+                p.setVenda(result.getDouble("Produto.venda"));
+                p.setEstoque(result.getInt("Produto.estoque"));
+                p.setQuantidade(result.getInt("Produto.quantidade"));
+                p.setUnidade(result.getString("Produto.unidade"));
+
+                System.out.println("Class: ProdutoDAO, método read();, Objeto:" + p);
 
                 list.add(p);
 
@@ -108,33 +119,43 @@ public class ProdutoDAO {
 
         List<Produto> list = new ArrayList();
 
-        String SQL = "SELECT * FROM Produto WHERE id = ?";
+        String SQL = "SELECT Produto.id, Produto.categoria, Categoria.descricao, Produto.fornecedor, Fornecedor.apelido, Produto.descricao, Produto.custo, Produto.venda, Produto.estoque, Produto.quantidade, Produto.unidade, Produto.cadastro FROM Produto "
+                + "INNER JOIN Categoria ON Produto.categoria = Categoria.id "
+                + "INNER JOIN Fornecedor ON Produto.fornecedor = Fornecedor.id WHERE Produto.id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
-
+            
             statement.setInt(1, busca);
             statement.execute();
 
             ResultSet result = statement.getResultSet();
 
             while (result.next()) {
+
                 Produto p = new Produto();
 
-                p.setId(result.getInt("id"));
-                p.setCategoria(
-                        new Categoria(
-                                result.getInt("categoria")
-                        ));
-                p.setFornecedor(
-                        new Fornecedor(
-                                result.getInt("fornecedor")
-                        ));
-                p.setDescricao(result.getString("descricao"));
-                p.setCusto(result.getFloat("custo"));
-                p.setVenda(result.getFloat("venda"));
-                p.setEstoque(result.getInt("estoque"));
-                p.setQuantidade(result.getInt("quantidade"));
-                p.setUnidade(result.getString("unidade"));
+                p.setId(result.getInt("Produto.id"));
+                System.out.println("id: " + p.getId());
+
+                Categoria categoria = new Categoria();
+                categoria.setId(result.getInt("Produto.categoria"));
+                categoria.setDescricao(result.getString("Categoria.descricao"));
+                p.setCategoria(categoria);
+
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(result.getInt("Produto.fornecedor"));
+                Pessoa pessoa = new Pessoa();
+                pessoa.setApelido("Fornecedor.apelido");
+                fornecedor.setPessoa(pessoa);
+                p.setFornecedor(fornecedor);
+
+                p.setDescricao(result.getString("Produto.descricao"));
+                p.setCusto(result.getDouble("Produto.custo"));
+                p.setVenda(result.getDouble("Produto.venda"));
+                p.setEstoque(result.getInt("Produto.estoque"));
+                p.setQuantidade(result.getInt("Produto.quantidade"));
+                p.setUnidade(result.getString("Produto.unidade"));
+                System.out.println("Class: ProdutoDAO, método read(Integer busca);, Objeto:" + p);
 
                 list.add(p);
 
@@ -164,17 +185,11 @@ public class ProdutoDAO {
                 Produto p = new Produto();
 
                 p.setId(result.getInt("id"));
-                p.setCategoria(
-                        new Categoria(
-                                result.getInt("categoria")
-                        ));
-                p.setFornecedor(
-                        new Fornecedor(
-                                result.getInt("fornecedor")
-                        ));
+                p.setCategoria(new Categoria(result.getInt("categoria")));
+                p.setFornecedor(new Fornecedor(result.getInt("fornecedor")));
                 p.setDescricao(result.getString("descricao"));
-                p.setCusto(result.getFloat("custo"));
-                p.setVenda(result.getFloat("venda"));
+                p.setCusto(result.getDouble("custo"));
+                p.setVenda(result.getDouble("venda"));
                 p.setEstoque(result.getInt("estoque"));
                 p.setQuantidade(result.getInt("quantidade"));
                 p.setUnidade(result.getString("unidade"));
@@ -201,8 +216,8 @@ public class ProdutoDAO {
             statement.setInt(1, p.getCategoria().getId());
             statement.setInt(2, p.getFornecedor().getId());
             statement.setString(3, p.getDescricao());
-            statement.setFloat(4, p.getCusto());
-            statement.setFloat(5, p.getVenda());
+            statement.setDouble(4, p.getCusto());
+            statement.setDouble(5, p.getVenda());
             statement.setInt(6, p.getEstoque());
             statement.setInt(7, p.getQuantidade());
             statement.setString(8, p.getUnidade());
