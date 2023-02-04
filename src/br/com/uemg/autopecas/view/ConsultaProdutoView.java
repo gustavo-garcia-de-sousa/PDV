@@ -173,7 +173,7 @@ public final class ConsultaProdutoView extends javax.swing.JInternalFrame {
                 ListaProduto.addRow(new Object[]{
                     p.getId(),
                     p.getDescricao(),
-                    p.getCategoria().getDescricao(),
+                    p.getCategoria(),
                     p.getVenda()});
 
             }
@@ -195,7 +195,7 @@ public final class ConsultaProdutoView extends javax.swing.JInternalFrame {
                 ListaProduto.addRow(new Object[]{
                     p.getId(),
                     p.getDescricao(),
-                    p.getCategoria().getDescricao(),
+                    p.getCategoria(),
                     p.getVenda()});
 
             }

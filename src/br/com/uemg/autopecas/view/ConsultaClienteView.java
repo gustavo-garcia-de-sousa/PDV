@@ -166,9 +166,9 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
             DefaultTableModel ListaCliente = (DefaultTableModel) TabelaClientes.getModel();
             ListaCliente.setNumRows(0);
 
-            ClienteDAO cd = new ClienteDAO(connection);
+            ClienteDAO dao = new ClienteDAO(connection);
 
-            for (Cliente c : cd.read()) {
+            for (Cliente c : dao.read()) {
 
                 ListaCliente.addRow(new Object[]{
                     c.getId(),
