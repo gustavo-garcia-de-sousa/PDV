@@ -28,7 +28,7 @@ public class FornecedorDAO {
         String SQL = "INSERT INTO Fornecedor (tipo, inscricao, nome, apelido, nascimento, logradouro, bairro, cidade, uf, cep, contato, email, responsavel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         System.out.println(f);
-        
+
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             connection.setAutoCommit(false);//desligando transação automática
