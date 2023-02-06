@@ -598,6 +598,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         BotaoNovo.setEnabled(false);
         BotaoEditar.setEnabled(false);
         limpar();
+        TextoCodigo.setText("");
         campos(true);
 
     }//GEN-LAST:event_BotaoNovoActionPerformed
