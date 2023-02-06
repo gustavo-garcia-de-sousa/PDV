@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -138,6 +139,34 @@ public class UsuarioDAO implements CRUD {
             System.out.println("*** ROLLBACK EXECUTADO ***");
         }
 
+    }
+
+    public boolean check(Usuario u) throws SQLException {
+
+        String SQL = "SELECT * FROM Usuario where nome = ? AND senha = ?";
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
+
+            statement.setString(1, u.getNome());
+            statement.setString(2, u.getSenha());
+
+            statement.execute();
+
+            connection.commit();//enviando transação
+            ResultSet result = statement.getResultSet();
+
+            while (result.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+
+            connection.rollback();//transação desfeita
+            System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
+        }
+        return false;
     }
 
 }
