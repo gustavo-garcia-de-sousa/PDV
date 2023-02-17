@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -61,6 +62,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 
@@ -69,6 +71,8 @@ public class FornecedorDAO {
         String SQL = "SELECT * FROM Fornecedor";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+            connection.setAutoCommit(false);//desligando transação automática
+
             statement.execute();
 
             ResultSet result = statement.getResultSet();
@@ -94,6 +98,8 @@ public class FornecedorDAO {
                 f.setEmail(result.getString("email"));
                 f.setCadastro(result.getString("cadastro"));
 
+                System.out.println(f);
+
                 list.add(f);
 
             }
@@ -101,6 +107,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
         return list;
     }
@@ -112,6 +119,8 @@ public class FornecedorDAO {
         String SQL = "SELECT * FROM Fornecedor WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
 
             statement.setInt(1, busca);
             statement.execute();
@@ -147,6 +156,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
         return list;
     }
@@ -158,6 +168,8 @@ public class FornecedorDAO {
         String SQL = "SELECT * FROM Fornecedor WHERE nome LIKE ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+
+            connection.setAutoCommit(false);//desligando transação automática
 
             statement.setString(1, "%" + busca + "%");
             statement.execute();
@@ -193,6 +205,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
 
         return list;
@@ -235,6 +248,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 
@@ -258,6 +272,7 @@ public class FornecedorDAO {
 
             connection.rollback();//transação desfeita
             System.out.println("*** ROLLBACK EXECUTADO ***");
+            JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
 
