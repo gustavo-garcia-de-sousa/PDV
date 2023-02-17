@@ -45,7 +45,9 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "|id: " + this.id + " |nome: " + this.nome + " |senha: " + this.senha + " |cargo: " + this.cargo + " |";
+        return "ID: " + this.id
+                + "\nNOME: " + this.nome
+                + "\nCARGO: " + this.cargo;
     }
 
 }

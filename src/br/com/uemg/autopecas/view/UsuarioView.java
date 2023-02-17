@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  *
  * @author gustavo
  */
-public class ClienteView extends javax.swing.JInternalFrame {
+public class UsuarioView extends javax.swing.JInternalFrame {
 
     public int transacao;
 
     /**
      * Creates new form Cliente
      */
-    public ClienteView() {
+    public UsuarioView() {
         initComponents();
 
     }
@@ -488,7 +488,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void BotaoGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoGravarActionPerformed
 
         gravar();
-        TextoCodigo.setEditable(false);
+        TextoCodigo.setEnabled(false);
         BotaoNovo.setEnabled(true);
         BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoGravarActionPerformed
@@ -567,12 +567,12 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
                 List<Cliente> c = dao.read(busca);
                 System.out.println("objeto:" + c);
-                TextoCodigo.setEditable(false);
+                TextoCodigo.setEnabled(false);
                 BotaoEditar.setEnabled(true);
                 preencher(c);
                 campos(false);
             } else {
-                TextoCodigo.setEditable(false);
+                TextoCodigo.setEnabled(false);
                 ConsultaClienteView cliente = new ConsultaClienteView();
                 PrincipalView.DesktopPanePrincipal.add(cliente);
                 cliente.setVisible(true);
@@ -593,8 +593,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void BotaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoActionPerformed
         // TODO add your handling code here:
         transacao = 0;
-        TextoCodigo.setEditable(false);
-        TextoFormatadoCadastro.setEditable(false);
+        TextoCodigo.setEnabled(false);
+        TextoFormatadoCadastro.setEnabled(false);
         BotaoNovo.setEnabled(false);
         BotaoEditar.setEnabled(false);
         limpar();
@@ -607,7 +607,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         transacao = 1;
         campos(true);
-        TextoCodigo.setEditable(false);
+        TextoCodigo.setEnabled(false);
         BotaoEditar.setEnabled(false);
         BotaoNovo.setEnabled(false);
     }//GEN-LAST:event_BotaoEditarActionPerformed
@@ -617,7 +617,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
         BotaoNovo.setEnabled(true);
            campos(false);
-        TextoCodigo.setEditable(true);
+        TextoCodigo.setEnabled(true);
         BotaoEditar.setEnabled(true);
     }//GEN-LAST:event_BotaoCancelarActionPerformed
 

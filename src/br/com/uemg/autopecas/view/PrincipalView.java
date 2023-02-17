@@ -1,8 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.uemg.autopecas.view;
+
+import br.com.uemg.autopecas.model.Usuario;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -10,11 +11,19 @@ package br.com.uemg.autopecas.view;
  */
 public class PrincipalView extends javax.swing.JFrame {
 
+    public static Usuario usuario;
+
     /**
      * Creates new form Principal
+     *
+     * @param usuario
      */
-    public PrincipalView() {
+    public PrincipalView(Usuario usuario) {
+
+        System.out.println(usuario);
+        PrincipalView.usuario = usuario;
         initComponents();
+        permissoes();
     }
 
     /**
@@ -26,18 +35,30 @@ public class PrincipalView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        DesktopPanePrincipal = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("../assets/background.jpg"));
+        Image image = icon.getImage();
+        DesktopPanePrincipal = new javax.swing.JDesktopPane(){
+
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+
+        };
+        NomeUsuario = new javax.swing.JLabel();
+        NomeCargo = new javax.swing.JLabel();
         MenuBarPrincipal = new javax.swing.JMenuBar();
         MenuCadastro = new javax.swing.JMenu();
         MenuItemCliente = new javax.swing.JMenuItem();
         MenuItemFornecedor = new javax.swing.JMenuItem();
         MenuItemCategoria = new javax.swing.JMenuItem();
         MenuItemProduto = new javax.swing.JMenuItem();
+        MenuItemUsuario = new javax.swing.JMenuItem();
         MenuPedido = new javax.swing.JMenu();
+        MenuItemOrdemVenda = new javax.swing.JMenuItem();
         MenuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GRACH AUTO PEÇAS");
+        setTitle("LICENCIADO PARA CNPJ: 00.123.453/0001-01");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -52,17 +73,39 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
-        DesktopPanePrincipal.setBackground(new java.awt.Color(204, 204, 204));
+        DesktopPanePrincipal.setForeground(new java.awt.Color(0, 204, 51));
+
+        NomeUsuario.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        NomeUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        NomeUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        NomeUsuario.setText("Bem Vindo(a)");
+
+        NomeCargo.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        NomeCargo.setForeground(new java.awt.Color(255, 255, 255));
+        NomeCargo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        NomeCargo.setText("Função:");
+
+        DesktopPanePrincipal.setLayer(NomeUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        DesktopPanePrincipal.setLayer(NomeCargo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout DesktopPanePrincipalLayout = new javax.swing.GroupLayout(DesktopPanePrincipal);
         DesktopPanePrincipal.setLayout(DesktopPanePrincipalLayout);
         DesktopPanePrincipalLayout.setHorizontalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 790, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DesktopPanePrincipalLayout.createSequentialGroup()
+                .addContainerGap(348, Short.MAX_VALUE)
+                .addGroup(DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(NomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NomeCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         DesktopPanePrincipalLayout.setVerticalGroup(
             DesktopPanePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+            .addGroup(DesktopPanePrincipalLayout.createSequentialGroup()
+                .addComponent(NomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NomeCargo)
+                .addGap(0, 435, Short.MAX_VALUE))
         );
 
         MenuBarPrincipal.setBackground(new java.awt.Color(0, 0, 0));
@@ -119,10 +162,36 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuCadastro.add(MenuItemProduto);
 
+        MenuItemUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        MenuItemUsuario.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        MenuItemUsuario.setText("USUÁRIO");
+        MenuItemUsuario.setEnabled(false);
+        MenuItemUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemUsuarioActionPerformed(evt);
+            }
+        });
+        MenuCadastro.add(MenuItemUsuario);
+
         MenuBarPrincipal.add(MenuCadastro);
 
         MenuPedido.setText("PEDIDO");
         MenuPedido.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        MenuPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuPedidoActionPerformed(evt);
+            }
+        });
+
+        MenuItemOrdemVenda.setFont(new java.awt.Font("Liberation Sans", 1, 16)); // NOI18N
+        MenuItemOrdemVenda.setText("ORDEM DE VENDA");
+        MenuItemOrdemVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemOrdemVendaActionPerformed(evt);
+            }
+        });
+        MenuPedido.add(MenuItemOrdemVenda);
+
         MenuBarPrincipal.add(MenuPedido);
 
         MenuSobre.setText("SOBRE");
@@ -145,6 +214,15 @@ public class PrincipalView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void permissoes() {
+        NomeUsuario.setText("BEM VINDO(A), " + usuario.getNome());
+        NomeCargo.setText("FUNÇÃO: " + usuario.getCargo());
+        if (usuario.getCargo().equals("GERENTE")) {
+            MenuItemUsuario.setEnabled(true);
+        }
+
+    }
 
     private void MenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemClienteActionPerformed
         // TODO add your handling code here:
@@ -171,25 +249,44 @@ public class PrincipalView extends javax.swing.JFrame {
     private void MenuItemFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemFornecedorActionPerformed
         // TODO add your handling code here:
 
-        FornecedorView fornecedor = new FornecedorView();
-        DesktopPanePrincipal.add(fornecedor);
-        fornecedor.setVisible(true);
+        FornecedorView fornecedorv = new FornecedorView();
+        DesktopPanePrincipal.add(fornecedorv);
+        fornecedorv.setVisible(true);
 
     }//GEN-LAST:event_MenuItemFornecedorActionPerformed
 
     private void MenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCategoriaActionPerformed
         // TODO add your handling code here:
-        CategoriaView categoria = new CategoriaView();
-        DesktopPanePrincipal.add(categoria);
-        categoria.setVisible(true);
+        CategoriaView categoriav = new CategoriaView();
+        DesktopPanePrincipal.add(categoriav);
+        categoriav.setVisible(true);
     }//GEN-LAST:event_MenuItemCategoriaActionPerformed
 
     private void MenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemProdutoActionPerformed
         // TODO add your handling code here:
-        ProdutoView produto = new ProdutoView();
-        DesktopPanePrincipal.add(produto);
-        produto.setVisible(true);
+        ProdutoView produtov = new ProdutoView();
+        DesktopPanePrincipal.add(produtov);
+        produtov.setVisible(true);
     }//GEN-LAST:event_MenuItemProdutoActionPerformed
+
+    private void MenuPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_MenuPedidoActionPerformed
+
+    private void MenuItemOrdemVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemOrdemVendaActionPerformed
+        // TODO add your handling code here:
+        VendaView vendav = new VendaView();
+        DesktopPanePrincipal.add(vendav);
+        vendav.setVisible(true);
+    }//GEN-LAST:event_MenuItemOrdemVendaActionPerformed
+
+    private void MenuItemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemUsuarioActionPerformed
+        // TODO add your handling code here:
+        UsuarioView usuariov = new UsuarioView();
+        DesktopPanePrincipal.add(usuariov);
+        usuariov.setVisible(true);
+    }//GEN-LAST:event_MenuItemUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +325,12 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemCategoria;
     private javax.swing.JMenuItem MenuItemCliente;
     private javax.swing.JMenuItem MenuItemFornecedor;
+    private javax.swing.JMenuItem MenuItemOrdemVenda;
     private javax.swing.JMenuItem MenuItemProduto;
+    private javax.swing.JMenuItem MenuItemUsuario;
     private javax.swing.JMenu MenuPedido;
     private javax.swing.JMenu MenuSobre;
+    private javax.swing.JLabel NomeCargo;
+    private javax.swing.JLabel NomeUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,19 +14,18 @@ import javax.swing.JOptionPane;
  *
  * @author gustavo
  */
-public class UsuarioDAO implements CRUD {
+public class UsuarioDAO {
 
     private final Connection connection;
+    private Usuario usuario;
 
     public UsuarioDAO(Connection connection) throws SQLException {
 
         this.connection = connection;
     }
 
-    @Override
-    public void create(Object object) throws SQLException {
+    public void create(Usuario u) throws SQLException {
 
-        Usuario u = (Usuario) object;//casting
         String SQL = "INSERT INTO Usuario (nome, senha, cargo) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -59,10 +58,9 @@ public class UsuarioDAO implements CRUD {
         }
     }
 
-    @Override
-    public List<Object> read() throws SQLException {
+    public List<Usuario> read() throws SQLException {
 
-        List<Object> list = new ArrayList<>();
+        List<Usuario> list = new ArrayList<>();
         String SQL = "SELECT * FROM Usuario";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
@@ -84,9 +82,8 @@ public class UsuarioDAO implements CRUD {
 
     }
 
-    @Override
-    public void update(Object object) throws SQLException {
-        Usuario u = (Usuario) object;//casting
+    public void update(Usuario u) throws SQLException {
+
         String SQL = "UPDATE Usuario SET nome = ?, senha = ?, cargo = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -115,9 +112,7 @@ public class UsuarioDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object object) throws SQLException {
-        Usuario u = (Usuario) object;
+    public void delete(Usuario u) throws SQLException {
 
         String SQL = "DELETE FROM Usuario WHERE id = ?";
 
@@ -143,7 +138,7 @@ public class UsuarioDAO implements CRUD {
 
     public boolean check(Usuario u) throws SQLException {
 
-        String SQL = "SELECT * FROM Usuario where nome = ? AND senha = ?";
+        String SQL = "SELECT nome, senha, cargo FROM Usuario where nome = ? AND senha = ?";
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
 
             connection.setAutoCommit(false);//desligando transação automática
@@ -154,9 +149,18 @@ public class UsuarioDAO implements CRUD {
             statement.execute();
 
             connection.commit();//enviando transação
+
             ResultSet result = statement.getResultSet();
 
             while (result.next()) {
+
+                System.out.println(result.getString("cargo"));
+
+                u.setNome(result.getString("nome"));
+                u.setCargo(result.getString("cargo"));
+                
+                setUsuario(u);
+
                 return true;
             }
 
@@ -167,6 +171,14 @@ public class UsuarioDAO implements CRUD {
             JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
         return false;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }
