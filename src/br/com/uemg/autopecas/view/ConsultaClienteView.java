@@ -20,16 +20,13 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
      * Creates new form ConsultaClienteView
      */
     ClienteView ccview = new ClienteView();
+    VendaView vview = new VendaView();
 
     public ConsultaClienteView() {
         initComponents();
         DefaultTableModel cliente = (DefaultTableModel) TabelaClientes.getModel();
         TabelaClientes.setRowSorter(new TableRowSorter(cliente));
 
-        TabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(40);
-        TabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(250);
-        TabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(130);
-        TabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);
         read();
 
     }
@@ -191,7 +188,6 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
             ClienteDAO cd = new ClienteDAO(connection);
 
             for (Cliente c : cd.read(busca)) {
-                //**/
 
                 ListaCliente.addRow(new Object[]{
                     c.getId(),
@@ -228,8 +224,9 @@ public final class ConsultaClienteView extends javax.swing.JInternalFrame {
         Cliente c = new Cliente();
 
         c.setId(Integer.valueOf(TabelaClientes.getValueAt(TabelaClientes.getSelectedRow(), 0).toString()));
-
+        vview.capturarCliente(c);
         ccview.capturar(c);
+
         dispose();
 
         // TODO add your handling code here:

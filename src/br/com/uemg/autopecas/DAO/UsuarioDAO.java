@@ -138,7 +138,7 @@ public class UsuarioDAO {
 
     public boolean check(Usuario u) throws SQLException {
 
-        String SQL = "SELECT nome, senha, cargo FROM Usuario where nome = ? AND senha = ?";
+        String SQL = "SELECT * FROM Usuario where nome = ? AND senha = ?";
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
 
             connection.setAutoCommit(false);//desligando transação automática
@@ -154,11 +154,10 @@ public class UsuarioDAO {
 
             while (result.next()) {
 
-                System.out.println(result.getString("cargo"));
-
+                u.setId(result.getInt("id"));
                 u.setNome(result.getString("nome"));
                 u.setCargo(result.getString("cargo"));
-                
+
                 setUsuario(u);
 
                 return true;

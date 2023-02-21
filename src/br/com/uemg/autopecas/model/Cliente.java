@@ -68,7 +68,8 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "ID:" + this.id
+        return "*** CLASSE CLIENTE ***"
+                + "ID CLIENTE:" + this.id
                 + "\nTIPO: " + this.pessoa.getTipo()
                 + "\nINSCRIÇÃO: " + this.pessoa.getInscricao()
                 + "\nAPELIDO: " + this.pessoa.getApelido()

@@ -20,6 +20,7 @@ public final class ConsultaProdutoView extends javax.swing.JInternalFrame {
      * Creates new form ConsultaClienteView
      */
     ProdutoView ccview = new ProdutoView();
+    VendaView vview = new VendaView();
 
     public ConsultaProdutoView() {
         initComponents();
@@ -175,7 +176,6 @@ public final class ConsultaProdutoView extends javax.swing.JInternalFrame {
                     p.getDescricao(),
                     p.getCategoria(),
                     p.getVenda()});
-
             }
 
         } catch (SQLException ex) {
@@ -229,6 +229,7 @@ public final class ConsultaProdutoView extends javax.swing.JInternalFrame {
         p.setId(Integer.valueOf(TabelaProdutos.getValueAt(TabelaProdutos.getSelectedRow(), 0).toString()));
 
         ccview.capturar(p);
+        vview.capturarProduto(p);
         dispose();
 
         // TODO add your handling code here:

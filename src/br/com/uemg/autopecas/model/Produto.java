@@ -23,6 +23,8 @@ public class Produto {
     }
 
     public Produto(Integer id) {
+
+        this.id = id;
     }
 
     public Produto(Integer id, Categoria categoria, Fornecedor fornecedor, String descricao, Double custo, Double venda, Integer estoque, Integer quantidade, String unidade) {
@@ -119,8 +121,8 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "PRODUTO"
-                + "\nID: " + this.id
+        return " *** CLASSE PRODUTO ***"
+                + "\nID PRODUTO: " + this.id
                 + "\nCATEGORIA: " + this.categoria
                 + "\nFORNECEDOR: " + this.fornecedor
                 + "\nDESCRICAO: " + this.descricao
