@@ -82,7 +82,7 @@ public class PedidoDAO {
             statement.execute();
 
             connection.commit();//enviando transação
-            
+
             System.out.println(p);
 
             try (ResultSet result = statement.getGeneratedKeys()) {
@@ -102,8 +102,12 @@ public class PedidoDAO {
     public List<Pedido> read() throws SQLException {
 
         List<Pedido> list = new ArrayList<>();
-        String SQL = "SELECT Pedido.id, Pedido.cliente, Pedido.subtotal, Pedido.desconto, Pedido.total, Produto.pagamento FROM Pedido "
-                + "INNER JOIN Cliente ON Pedido.cliente = Cliente.id ";
+
+        String SQL = "SELECT Pedido.id, Pedido_Produto.pedido, Pedido_Produto.produto, Pedido.cliente, Cliente.nome, Produto.descricao, Pedido.subtotal, Pedido.desconto, Pedido.total, Pedido.pagamento"
+                + " FROM Pedido_Produto"
+                + " INNER JOIN Pedido ON Pedido_Produto.pedido = Pedido.id"
+                + " INNER JOIN Produto ON Pedido_Produto.produto = Produto.id"
+                + " INNER JOIN Cliente ON Pedido.cliente = Cliente.id ";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
             connection.setAutoCommit(false);//desligando transação automática
@@ -118,8 +122,11 @@ public class PedidoDAO {
 
                 p.setId(result.getInt("Pedido.id"));
 
+                System.out.println(p.getId());
+
                 Cliente cliente = new Cliente();
-                cliente.setId(result.getInt("Pedido.categoria"));
+                cliente.setId(result.getInt("Pedido.cliente"));
+                cliente.setPessoa(new Pessoa("Cliente.nome"));
 
                 p.setCliente(cliente);
 

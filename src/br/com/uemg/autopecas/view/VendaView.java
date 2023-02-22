@@ -392,20 +392,20 @@ public class VendaView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(TabelaProdutosAdicionados);
 
-        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("TOTAL:");
 
         TextoFinalTotal.setEditable(false);
         TextoFinalTotal.setForeground(new java.awt.Color(51, 0, 255));
         TextoFinalTotal.setText("0,00");
-        TextoFinalTotal.setFont(new java.awt.Font("Liberation Sans", 1, 26)); // NOI18N
+        TextoFinalTotal.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel2.setText("PAGAMENTO:");
 
         TextoFinalSubtotal.setText("0,00");
-        TextoFinalSubtotal.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        TextoFinalSubtotal.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         TextoFinalSubtotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextoFinalSubtotalActionPerformed(evt);
@@ -426,23 +426,28 @@ public class VendaView extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel3.setText("SUBTOTAL:");
 
-        ComboBoxPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxPagamento.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        ComboBoxPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "À VISTA", "CARTÃO DÉBITO", "CARTÃO CRÉDITO" }));
 
+        TextoFinalDesconto.setForeground(new java.awt.Color(255, 51, 51));
         TextoFinalDesconto.setText("0,00");
-        TextoFinalDesconto.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        TextoFinalDesconto.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
         jLabel4.setText("DESCONTO:");
 
         TextoCodigoCliente.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel5.setText("R$");
 
-        jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(251, 51, 51));
         jLabel6.setText("R$");
 
-        jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 0, 255));
         jLabel7.setText("R$");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -462,18 +467,16 @@ public class VendaView extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(14, 14, 14)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(36, 36, 36)
-                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabel1))
+                                        .addGap(14, 14, 14)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(0, 0, 0)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)

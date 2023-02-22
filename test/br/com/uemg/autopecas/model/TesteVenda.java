@@ -2,8 +2,8 @@ package br.com.uemg.autopecas.model;
 
 import br.com.uemg.autopecas.controller.ConnectionFactory;
 import java.sql.Connection;
-import br.com.uemg.autopecas.model.Pedido;
 import br.com.uemg.autopecas.DAO.PedidoDAO;
+import java.util.List;
 
 /**
  *
@@ -25,7 +25,10 @@ public class TesteVenda {
 
             PedidoDAO dao = new PedidoDAO(connection);
 
-            dao.create(p);
+            //dao.create(p);
+            for (Pedido pedido : dao.read()) {
+                
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

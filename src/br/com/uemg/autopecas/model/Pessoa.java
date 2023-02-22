@@ -19,6 +19,10 @@ public class Pessoa {
 
     public Pessoa() {
     }
+    
+    public Pessoa(String nome) {
+        this.nome = nome;
+    }
 
     public Pessoa(String tipo, String inscricao, String apelido, String nome, String abertura, String logradouro, String bairro, String cidade, String uf, String CEP) {
         this.tipo = tipo;
