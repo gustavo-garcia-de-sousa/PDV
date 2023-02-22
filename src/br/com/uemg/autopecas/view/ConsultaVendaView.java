@@ -16,7 +16,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author gustavo
  */
-public final class ConsultaVenda extends javax.swing.JInternalFrame {
+public final class ConsultaVendaView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultaClienteView
@@ -24,7 +24,7 @@ public final class ConsultaVenda extends javax.swing.JInternalFrame {
     ClienteView ccview = new ClienteView();
     VendaView vview = new VendaView();
 
-    public ConsultaVenda() {
+    public ConsultaVendaView() {
         initComponents();
         DefaultTableModel cliente = (DefaultTableModel) TabelaVendas.getModel();
         TabelaVendas.setRowSorter(new TableRowSorter(cliente));
@@ -170,12 +170,14 @@ public final class ConsultaVenda extends javax.swing.JInternalFrame {
                 ListaVenda.addRow(new Object[]{
                     p.getId(),
                     p.getCliente().getPessoa().getNome(),
-                    p.getTotal(),});
+                    p.getTotal(),
+                    p.getData()
+                });
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultaVenda.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultaVendaView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -197,7 +199,7 @@ public final class ConsultaVenda extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultaVenda.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultaVendaView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

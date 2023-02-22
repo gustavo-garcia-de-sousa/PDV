@@ -1,5 +1,7 @@
 package br.com.uemg.autopecas.model;
 
+import java.util.Date;
+
 /**
  *
  * @author gustavo
@@ -12,6 +14,7 @@ public class Pedido {
     private Double desconto;
     private Double total;
     private String pagamento;
+    private Date data;
 
     public Pedido() {
     }
@@ -76,6 +79,14 @@ public class Pedido {
 
     public void setPagamento(String pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 
     @Override

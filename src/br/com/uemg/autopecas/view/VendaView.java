@@ -855,6 +855,10 @@ public class VendaView extends javax.swing.JInternalFrame {
 
     private void BotaoBuscarOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarOrcamentoActionPerformed
         // TODO add your handling code here:
+        ConsultaVendaView venda = new ConsultaVendaView();
+        PrincipalView.DesktopPanePrincipal.add(venda);
+        venda.setVisible(true);
+        PrincipalView.DesktopPanePrincipal.setComponentZOrder(venda, 0);
     }//GEN-LAST:event_BotaoBuscarOrcamentoActionPerformed
 
     private void BotaoRetirarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRetirarProdutoActionPerformed
