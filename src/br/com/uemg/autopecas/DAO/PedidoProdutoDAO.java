@@ -1,14 +1,18 @@
 package br.com.uemg.autopecas.DAO;
 
+import br.com.uemg.autopecas.model.Categoria;
 import br.com.uemg.autopecas.model.Cliente;
+import br.com.uemg.autopecas.model.Fornecedor;
 import br.com.uemg.autopecas.model.Pedido;
 import br.com.uemg.autopecas.model.PedidoProduto;
+import br.com.uemg.autopecas.model.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -57,12 +61,16 @@ public class PedidoProdutoDAO {
             JOptionPane.showMessageDialog(null, "Transação não executada. Código: " + e);
         }
     }
-    
-    public List<Pedido> read(Integer busca) throws SQLException {
 
-        List<Pedido> list = new ArrayList<>();
-        String SQL = "SELECT Pedido.id, Pedido.cliente, Pedido.subtotal, Pedido.desconto, Pedido.total, Produto.pagamento FROM Pedido "
-                + "INNER JOIN Cliente ON Pedido.cliente = Cliente.id WHERE id = ?";
+    public List<PedidoProduto> read(Integer busca) throws SQLException {
+
+        List<PedidoProduto> list = new ArrayList<>();
+        String SQL = "SELECT Pedido_Produto.pedido, Pedido.cliente, Cliente.nome, Pedido.pagamento, Pedido.subtotal, Pedido.desconto, Pedido.total, Pedido_Produto.produto, Produto.descricao, Produto.venda, Pedido_Produto.quantidade, Pedido_Produto.desconto\n"
+                + "FROM Pedido_Produto \n"
+                + "INNER JOIN Pedido ON Pedido_Produto.pedido = Pedido.id \n"
+                + "INNER JOIN Produto ON Pedido_Produto.produto = Produto.id\n"
+                + "INNER JOIN Cliente ON Pedido.cliente = Cliente.id\n"
+                + "WHERE Pedido.id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(SQL)) {
             connection.setAutoCommit(false);//desligando transação automática
@@ -74,19 +82,14 @@ public class PedidoProdutoDAO {
 
             while (result.next()) {
 
-                Pedido p = new Pedido();
+                PedidoProduto p = new PedidoProduto();
 
-                p.setId(result.getInt("Pedido.id"));
-
-                Cliente cliente = new Cliente();
-                cliente.setId(result.getInt("Pedido.categoria"));
-
-                p.setCliente(cliente);
-
-                p.setSubtotal(result.getDouble("Pedido.subtotal"));
-                p.setDesconto(result.getDouble("Pedido.desconto"));
-                p.setTotal(result.getDouble("Pedido.total"));
-                p.setPagamento(result.getString("Pedido.pagamento"));
+                p.setId(result.getInt("Pedido_Produto.pedido"));
+                p.setProduto(new Produto());
+                p.getProduto().setVenda(result.getDouble("Produto.venda"));
+                p.getProduto().setDescricao(result.getString("Produto.descricao"));
+p.setDesconto(Double.NaN);
+                
 
                 list.add(p);
 

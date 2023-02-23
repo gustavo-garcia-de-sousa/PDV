@@ -14,6 +14,9 @@ public class PedidoProduto {
     private Double desconto;
     private Double total;
 
+    public PedidoProduto() {
+    }
+
     public PedidoProduto(Integer id, Pedido pedido, Produto produto, Integer quantidade, Double subtotal, Double desconto, Double total) {
         this.id = id;
         this.pedido = pedido;

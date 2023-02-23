@@ -43,9 +43,6 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         PainelConsultaClientes = new javax.swing.JPanel();
-        TextoArgumento = new javax.swing.JTextField();
-        LabelArgumento = new javax.swing.JLabel();
-        BotaoConsultar = new javax.swing.JButton();
         ScrollPainel = new javax.swing.JScrollPane();
         TabelaVendas = new javax.swing.JTable();
 
@@ -69,21 +66,6 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
-            }
-        });
-
-        TextoArgumento.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-
-        LabelArgumento.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        LabelArgumento.setText("Nome:");
-
-        BotaoConsultar.setBackground(new java.awt.Color(0, 102, 102));
-        BotaoConsultar.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        BotaoConsultar.setForeground(new java.awt.Color(255, 255, 255));
-        BotaoConsultar.setText("Consultar");
-        BotaoConsultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoConsultarActionPerformed(evt);
             }
         });
 
@@ -117,30 +99,15 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
             PainelConsultaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelConsultaClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PainelConsultaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScrollPainel)
-                    .addGroup(PainelConsultaClientesLayout.createSequentialGroup()
-                        .addGroup(PainelConsultaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelArgumento)
-                            .addGroup(PainelConsultaClientesLayout.createSequentialGroup()
-                                .addComponent(TextoArgumento, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotaoConsultar)))
-                        .addGap(0, 204, Short.MAX_VALUE)))
+                .addComponent(ScrollPainel, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
                 .addContainerGap())
         );
         PainelConsultaClientesLayout.setVerticalGroup(
             PainelConsultaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelConsultaClientesLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(LabelArgumento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PainelConsultaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextoArgumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotaoConsultar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addComponent(ScrollPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,7 +121,7 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
             .addComponent(PainelConsultaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setBounds(250, 250, 926, 386);
+        setBounds(250, 250, 926, 327);
     }// </editor-fold>//GEN-END:initComponents
 
     public void read() {
@@ -181,27 +148,6 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
         }
     }
 
-    public void read(String busca) {
-        try (Connection connection = new ConnectionFactory().getConnection()) {
-            DefaultTableModel ListaCliente = (DefaultTableModel) TabelaVendas.getModel();
-            ListaCliente.setNumRows(0);
-
-            ClienteDAO cd = new ClienteDAO(connection);
-
-            for (Cliente c : cd.read(busca)) {
-
-                ListaCliente.addRow(new Object[]{
-                    c.getId(),
-                    c.getPessoa().getNome(),
-                    c.getPessoa().getInscricao(),
-                    c.getContato()});
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaVendaView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
@@ -216,17 +162,13 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_formInternalFrameOpened
 
-    private void BotaoConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoConsultarActionPerformed
-        // TODO add your handling code here:
-        read(TextoArgumento.getText());
-    }//GEN-LAST:event_BotaoConsultarActionPerformed
-
     private void TabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaVendasMouseClicked
-        Pedido c = new Pedido();
+        Pedido p = new Pedido();
 
-        c.setId(Integer.valueOf(TabelaVendas.getValueAt(TabelaVendas.getSelectedRow(), 0).toString()));
-        //vview.capturarCliente(c);
-        //ccview.capturar(c);
+        p.setId(Integer.valueOf(TabelaVendas.getValueAt(TabelaVendas.getSelectedRow(), 0).toString()));
+
+        System.out.println("ID QUE TO ENVIANDO!" + p.getId());
+        vview.capturarOrcamento(p);
 
         dispose();
 
@@ -235,11 +177,8 @@ public final class ConsultaVendaView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoConsultar;
-    private javax.swing.JLabel LabelArgumento;
     private javax.swing.JPanel PainelConsultaClientes;
     private javax.swing.JScrollPane ScrollPainel;
     private javax.swing.JTable TabelaVendas;
-    private javax.swing.JTextField TextoArgumento;
     // End of variables declaration//GEN-END:variables
 }
